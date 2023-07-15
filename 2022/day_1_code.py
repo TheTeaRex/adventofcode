@@ -13,5 +13,7 @@ for calory in calories:
         elvies.append(count)
         count = 0
 
+print(max(elvies))
+
 elvies.sort(reverse = True)
 print(sum(elvies[:3]))
