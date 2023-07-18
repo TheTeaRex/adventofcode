@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 
-with open('day_4_input', 'r') as f:
+import os
+
+with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r') as f:
     text = f.read()
 
 pairs = text.split('\n')

@@ -1,6 +1,8 @@
 #! /usr/bin/python3
 
-with open('day_1_input', 'r') as f:
+import os
+
+with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r') as f:
     text = f.read()
 
 calories = text.split('\n')

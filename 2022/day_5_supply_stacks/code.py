@@ -2,8 +2,9 @@
 
 import collections
 import copy
+import os
 
-with open('day_5_input', 'r') as f:
+with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r') as f:
     text = f.read()
 
 lines = text.split('\n')
