@@ -8,7 +8,7 @@ def read_file():
     f.close()
     return text
 
-def part_solution(text, unique):
+def solution(text, unique):
     i = j = 0
     buffer = set()
     while j < len(text):
@@ -29,7 +29,25 @@ def part_solution(text, unique):
 
     return j
 
+def better_solution(text, unique):
+    buffer = set()
+    i = j = 0
+    while j < len(text):
+        if text[j] not in buffer:
+            buffer.add(text[j])
+        else:
+            while i < j:
+                if text[i] == text[j]:
+                    i += 1
+                    break
+                else:
+                    buffer.remove(text[i])
+                i += 1
+        j += 1
+        if len(buffer) == unique:
+            return j
+
 if __name__ == "__main__":
     text = read_file()
-    print(part_solution(text, 4))
-    print(part_solution(text, 14))
+    print(better_solution(text, 4))
+    print(better_solution(text, 14))
