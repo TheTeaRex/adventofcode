@@ -10,6 +10,7 @@ from typing import List
 class World:
     def __init__(self, blob: str) -> None:
         self.item_id = 0
+        self.modulo = 1
         self.monkeys = []
         self.items = []
         self.parse_text(blob)
@@ -28,6 +29,7 @@ class World:
             op = m.groupdict()['op']
             op_params = [m.groupdict()['param1'], m.groupdict()['param2']]
             test = int(re.match(r'\s*Test: divisible by (?P<test>\d+)', blob[line + 3]).groupdict()['test'])
+            self.modulo *= test
             true_id = int(re.match(r'\s*If true: throw to monkey (?P<id>\d+)', blob[line + 4]).groupdict()['id'])
             false_id = int(re.match(r'\s*If false: throw to monkey (?P<id>\d+)', blob[line + 5]).groupdict()['id'])
 

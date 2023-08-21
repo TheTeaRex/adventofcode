@@ -40,7 +40,7 @@ class Monkey:
     def catches_item(self, item: Item) -> None:
         self.items.append(item)
 
-    def performs_operation(self, item: Item) -> Tuple[int, Item]:
+    def performs_operation(self, item: Item, modulo: int, relief: int) -> Tuple[int, Item]:
         '''
         in: expects length of 2 item to operate on
         out: returns monkey id to pass item to
@@ -54,13 +54,12 @@ class Monkey:
 
         if self.op == '+':
             worry_level = nums[0] + nums[1]
-        elif self.op == '-':
-            worry_level = nums[0] - nums[1]
         elif self.op == '*':
             worry_level = nums[0] * nums[1]
         else: # self.op == '/'
             raise MonkeyOperationError()
 
-        worry_level = worry_level // 3
+        worry_level = worry_level // relief
+        worry_level %= modulo
         item.set_wlevel(worry_level)
         return (self.true_id, item) if worry_level % self.test == 0 else (self.false_id, item)
