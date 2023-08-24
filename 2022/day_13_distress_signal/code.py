@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 
+import copy
 import json
 import os
 from typing import List
@@ -17,23 +18,48 @@ def parse_data(lines: List[str]) -> List[dict]:
     packets = []
     i = 0
     while i < len(lines):
-        packets.append(
-            {
-                'left': json.loads(lines[i]),
-                'right': json.loads(lines[i + 1])
-            }
-        )
+        packets += [json.loads(lines[i]), json.loads(lines[i + 1])]
         i += 3
     return packets
 
 
 def solution_part_1(packets) -> int:
     '''
-    take the list of pair packets, make the comparison
+    take the list of packets, make comparison two at a time
     collect the "right" order indices (starts at 1) and
     return the sum of the indices
     '''
-    return sum([i + 1 if is_pair_in_right_order(packets[i]['left'], packets[i]['right']) else 0 for i in range(len(packets))])
+    result = []
+    i = 0
+    while i < len(packets):
+        is_right_order = is_pair_in_right_order(packets[i], packets[i + 1])
+        i += 2
+        if is_right_order:
+            result.append(i // 2)
+
+    return sum(result)
+
+
+def solution_part_2(packets) -> int:
+    a, b = [[2]], [[6]]
+    packets += [a, b]
+    i = 1
+    while i < len(packets):
+        is_right_order = is_pair_in_right_order(packets[i - 1], packets[i])
+        j = i
+        while not is_right_order and j > 0: # ideally this wouldn't let j goes smaller than 1
+            temp = packets[j]
+            packets[j] = packets[j - 1]
+            packets[j - 1] = temp
+            j -= 1
+            is_right_order = is_pair_in_right_order(packets[j - 1], packets[j])
+        i += 1
+
+    result = 1
+    for i, v in enumerate(packets):
+        if v == a or v == b:
+            result *= (i + 1)
+    return result
 
 
 def is_pair_in_right_order(left, right) -> bool:
@@ -67,8 +93,9 @@ def is_pair_in_right_order(left, right) -> bool:
     return None
 
 
-
 if __name__ == "__main__":
     text = read_file('input').split('\n')
     packets = parse_data(text)
     print(f'Part 1: {solution_part_1(packets)}')
+    packets2 = copy.deepcopy(packets)
+    print(f'Part 2: {solution_part_2(packets)}')
