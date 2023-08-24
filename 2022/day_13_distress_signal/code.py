@@ -40,7 +40,7 @@ def solution_part_1(packets) -> int:
     return sum(result)
 
 
-def solution_part_2(packets) -> int:
+def solution_part_2_through_sorting(packets) -> int:
     a, b = [[2]], [[6]]
     packets += [a, b]
     i = 1
@@ -61,6 +61,19 @@ def solution_part_2(packets) -> int:
             result *= (i + 1)
     return result
 
+
+def solution_part_2_no_sorting(packets) -> int:
+    a, b = [[2]], [[6]]
+    if is_pair_in_right_order(a, b): # indices started 1
+        cnta, cntb = 1, 2
+    else:
+        cnta, cntb = 2, 1
+
+    for packet in packets:
+        cnta += 1 if not is_pair_in_right_order(a, packet) else 0
+        cntb += 1 if not is_pair_in_right_order(b, packet) else 0
+
+    return cnta * cntb
 
 def is_pair_in_right_order(left, right) -> bool:
     '''
@@ -98,4 +111,6 @@ if __name__ == "__main__":
     packets = parse_data(text)
     print(f'Part 1: {solution_part_1(packets)}')
     packets2 = copy.deepcopy(packets)
-    print(f'Part 2: {solution_part_2(packets)}')
+    print(f'Part 2 with sorting: {solution_part_2_through_sorting(packets2)}')
+    packets3 = copy.deepcopy(packets)
+    print(f'Part 2 with no sorting: {solution_part_2_no_sorting(packets3)}')
