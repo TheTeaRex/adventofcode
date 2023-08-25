@@ -109,7 +109,7 @@ Finally, only two more units of sand can possibly come to rest:
 .o.ooooo#.
 #########.
 ```
-Once all 24 units of sand shown above have come to rest, all further sand flows out the bottom, falling into the endless void. Just for fun, the path any new sand takes before falling forever is shown here with ~:
+Once all `24` units of sand shown above have come to rest, all further sand flows out the bottom, falling into the endless void. Just for fun, the path any new sand takes before falling forever is shown here with ~:
 
 ```
 .......+...
@@ -169,3 +169,7 @@ To find somewhere safe to stand, you'll need to simulate falling sand until a un
 #########################
 ```
 Using your scan, simulate the falling sand until the source of the sand becomes blocked. How many units of sand come to rest?
+
+Your puzzle answer was `27566`.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
