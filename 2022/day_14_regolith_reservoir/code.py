@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 
 
-import copy
 import os
 from cave import Cave
 
