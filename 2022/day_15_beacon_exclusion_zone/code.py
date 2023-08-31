@@ -1,9 +1,10 @@
 #! /usr/bin/python3
 
 
+import helper
 import os
 from cave import Cave
-from typing import List
+from typing import List, Tuple
 
 
 def read_file(file_name: str) -> str:
@@ -34,11 +35,11 @@ def solution_part_1(cave: Cave, row: int) -> int:
     for sensor in cave.sensors:
         if sensor.coordinate[1] == row:
             sensors.append(sensor)
-        up = sensor.coordinate[1] - sensor.distance_to_closest_beacon
-        down = sensor.coordinate[1] + sensor.distance_to_closest_beacon
+        up = sensor.coordinate[1] - sensor.detection_distance
+        down = sensor.coordinate[1] + sensor.detection_distance
         if up <= row <= down:
-            one = sensor.distance_to_closest_beacon - abs(row - sensor.coordinate[1]) + sensor.coordinate[0]
-            two = -(sensor.distance_to_closest_beacon - abs(row - sensor.coordinate[1])) + sensor.coordinate[0]
+            one = sensor.detection_distance - abs(row - sensor.coordinate[1]) + sensor.coordinate[0]
+            two = -(sensor.detection_distance - abs(row - sensor.coordinate[1])) + sensor.coordinate[0]
             ranges.append([min(one, two), max(one, two)])
 
     ranges = remove_overlapped_ranges(ranges)
@@ -61,7 +62,39 @@ def solution_part_1(cave: Cave, row: int) -> int:
     return result
 
 
+def solution_part_2(cave: Cave, grid_size: int) -> int:
+    answer = None
+    intersections = []
+    sensors_that_could_intersect = cave.gets_sensors_that_are_close_enough()
+    for sensor in sensors_that_could_intersect:
+        for neighbor in sensors_that_could_intersect[sensor]:
+            for s_slope in sensor.p_edge_plus_one:
+                for n_slope in neighbor.n_edge_plus_one:
+                    temp = helper.gets_line_intersection(s_slope, n_slope)
+                    if 0 <= temp[0] <= grid_size and 0 <= temp[1] <= grid_size:
+                        intersections.append(temp)
+            for s_slope in sensor.n_edge_plus_one:
+                for n_slope in neighbor.p_edge_plus_one:
+                    temp = helper.gets_line_intersection(s_slope, n_slope)
+                    if 0 <= temp[0] <= grid_size and 0 <= temp[1] <= grid_size:
+                        intersections.append(temp)
+
+    for intersection in intersections:
+        for sensor in cave.sensors:
+            if helper.is_within_distance(intersection, sensor.coordinate, sensor.detection_distance):
+                break
+        else:
+            answer = intersection
+            break
+
+    if answer is None:
+        # should never reach this
+        raise Exception('Error: no valid solution found for part 2')
+    return answer[0] * 4000000 + answer[1]
+
+
 if __name__ == "__main__":
     text = read_file('input').split('\n')
     cave = Cave(text)
     print(f'Part 1: {solution_part_1(cave, 2000000)}')
+    print(f'Part 2: {solution_part_2(cave, 4000000)}')

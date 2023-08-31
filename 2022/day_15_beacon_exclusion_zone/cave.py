@@ -1,10 +1,11 @@
 #! /usr/bin/python3
 
 
+import helper
 import re
 from beacon import Beacon
 from sensor import Sensor
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 
 class Cave:
@@ -24,20 +25,37 @@ class Cave:
             sy = int(m.groupdict()['sy'])
             bx = int(m.groupdict()['bx'])
             by = int(m.groupdict()['by'])
-            dist = self.calculates_the_distance((sx, sy), (bx, by))
+            dist = helper.calculates_the_distance((sx, sy), (bx, by))
             self.sensors.append(Sensor(sx, sy, dist))
             self.add_beacon_to_cave_if_not_exists(Beacon(bx, by))
 
-    def calculates_the_distance(self, a: Tuple[int], b: Tuple[int]) -> int:
-        return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
-    def is_within_distance(self, a: Tuple[int], b: Tuple[int], distance: int) -> bool:
-        return self.calculates_the_distance(a, b) <= distance
-
     def add_beacon_to_cave_if_not_exists(self, beacon: Beacon) -> None:
+        '''
+        checks if given beacon exists already using the coordinate
+        if not, add it, otherwise no op
+        '''
         if not self.does_beacon_exist_in_given_coordinate(beacon.coordinate):
             self.beacons.append(beacon)
             self.beacon_coordinates_set.add(beacon.coordinate)
 
     def does_beacon_exist_in_given_coordinate(self, coordinate: Tuple[int]) -> bool:
+        '''
+        checks if a beacon already recorded with the given coordinate
+        '''
         return coordinate in self.beacon_coordinates_set
+
+    def gets_sensors_that_are_close_enough(self) -> Dict[Sensor, List[Sensor]]:
+        '''
+        gathers all the sensors that could intersect when distance + 1
+        this is for part 2 solution
+        '''
+        result = {}
+        for i, sensor in enumerate(self.sensors):
+            result[sensor] = []
+            for j in range(i + 1, len(self.sensors)):
+                for item in [sensor.up_plus_one, sensor.right_plus_one, sensor.down_plus_one, sensor.left_plus_one]:
+                    # adding 1 distance to include sensors that are next to it
+                    if helper.is_within_distance(self.sensors[j].coordinate, item, self.sensors[j].detection_distance + 1):
+                        result[sensor].append(self.sensors[j])
+                        break
+        return result
