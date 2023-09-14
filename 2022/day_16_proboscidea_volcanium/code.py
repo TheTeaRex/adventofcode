@@ -87,39 +87,32 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
             count += 1
 
     cache = {}
-    def dfs(room: Room, time: int, valves_state: List[bool]) -> int:
-        if (room.name, time, tuple(valves_state)) in cache:
-            return cache[(room.name, time, tuple(valves_state))]
+    def dfs(room: Room, time: int, valves_state: List[bool], cur_value: int, max_val: int) -> int:
+        index = (room.name, tuple(valves_state))
+        if index in cache and cache[index] > cur_value:
+            return cache[index]
+        cache[index] = cur_value
+        max_val = max(max_val, cur_value)
 
-        max_val = 0
         for neighbor, dist in room.to_all_rooms.items():
-            # - 1 for turnning the value
             remaining_time = time - dist - 1
             if remaining_time <= 0:
                 continue
             if valves_state[rooms_ref[neighbor]]:
                 continue
-            max_val = max(
-                max_val,
-                dfs(
-                    rooms[neighbor],
-                    remaining_time,
-                    [True if rooms_ref[neighbor] == i else state for i, state in enumerate(valves_state)]) + \
-                        (rooms[neighbor].flow_rate * remaining_time)
-            )
-        cache[(room.name, time, tuple(valves_state))] = max_val
+            neighbor_state = [True if rooms_ref[neighbor] == i else state for i, state in enumerate(valves_state)]
+            neighbor_value = cur_value + (rooms[neighbor].flow_rate * remaining_time)
+            max_val = max(max_val, dfs(rooms[neighbor], remaining_time, neighbor_state, neighbor_value, max_val))
         return max_val
-    
+
     if part == 1:
-        return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))])
+        return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))], 0, 0)
     else:
-        time_left -= 4
         result = 0
         for i in creates_all_combos_valve_states(len(rooms_ref)):
-            count += 1
             result = max(
                 result,
-                dfs(start_room, time_left, i) + dfs(start_room, time_left, [False if state else True for state in i])
+                dfs(start_room, time_left, i, 0, 0) + dfs(start_room, time_left, [False if state else True for state in i], 0, 0)
             )
         return result
 
@@ -137,4 +130,4 @@ if __name__ == "__main__":
     rooms = maps_rooms(text)
     rooms = maps_dist_from_room_to_room(rooms)
     print(f'Part 1: {solution(rooms["AA"], 30, rooms, 1)}')
-    print(f'Part 2: {solution(rooms["AA"], 30, rooms, 2)}')
+    print(f'Part 2: {solution(rooms["AA"], 26, rooms, 2)}')
