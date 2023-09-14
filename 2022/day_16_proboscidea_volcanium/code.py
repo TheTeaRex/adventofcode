@@ -58,7 +58,22 @@ def maps_dist_from_room_to_room(rooms: Dict[str, Room]) -> Dict[str, Room]:
     return rooms
 
 
-def part_1_solution(start_room: Room, time_left: int, rooms: Dict[str, Room]) -> int:
+def creates_all_combos_valve_states(num: int) -> List[List[bool]]:
+    '''
+    Input: the size of the combo needed
+    Output: return a list of all possible boolean combo with the given size
+    '''
+    result = [[]]
+    for _ in range(num):
+        temp = []
+        for item in result:
+            for a in [True, False]:
+                temp.append([a] + item)
+        result = temp
+    return result
+
+
+def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int) -> int:
     '''
     Input: the object of the starting room, time givent to get out, all the rooms objects
     Output: the maximum pressure to be release with the given time
@@ -94,7 +109,19 @@ def part_1_solution(start_room: Room, time_left: int, rooms: Dict[str, Room]) ->
             )
         cache[(room.name, time, tuple(valves_state))] = max_val
         return max_val
-    return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))])
+    
+    if part == 1:
+        return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))])
+    else:
+        time_left -= 4
+        result = 0
+        for i in creates_all_combos_valve_states(len(rooms_ref)):
+            count += 1
+            result = max(
+                result,
+                dfs(start_room, time_left, i) + dfs(start_room, time_left, [False if state else True for state in i])
+            )
+        return result
 
 
 def prints_rooms(rooms: Dict[str, Room]) -> None:
@@ -109,4 +136,5 @@ if __name__ == "__main__":
     text = read_file('input').split('\n')
     rooms = maps_rooms(text)
     rooms = maps_dist_from_room_to_room(rooms)
-    print(f'Part 1: {part_1_solution(rooms["AA"], 30, rooms)}')
+    print(f'Part 1: {solution(rooms["AA"], 30, rooms, 1)}')
+    print(f'Part 2: {solution(rooms["AA"], 30, rooms, 2)}')
