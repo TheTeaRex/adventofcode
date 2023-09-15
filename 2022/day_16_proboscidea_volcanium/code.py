@@ -2,7 +2,7 @@
 
 
 from collections import deque
-from typing import Dict, List, Set
+from typing import Dict, List
 from room import Room
 import os
 import re
@@ -58,21 +58,6 @@ def maps_dist_from_room_to_room(rooms: Dict[str, Room]) -> Dict[str, Room]:
     return rooms
 
 
-def creates_all_combos_valve_states(num: int) -> List[List[bool]]:
-    '''
-    Input: the size of the combo needed
-    Output: return a list of all possible boolean combo with the given size
-    '''
-    result = [[]]
-    for _ in range(num):
-        temp = []
-        for item in result:
-            for a in [True, False]:
-                temp.append([a] + item)
-        result = temp
-    return result
-
-
 def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int) -> int:
     '''
     Input: the object of the starting room, time givent to get out, all the rooms objects
@@ -87,8 +72,8 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
             count += 1
 
     cache = {}
-    def dfs(room: Room, time: int, valves_state: List[bool], cur_value: int, max_val: int) -> int:
-        index = (room.name, tuple(valves_state))
+    def dfs(room: Room, time: int, bitmask: int, cur_value: int, max_val: int) -> int:
+        index = (room.name, bitmask)
         if index in cache and cache[index] > cur_value:
             return cache[index]
         cache[index] = cur_value
@@ -98,18 +83,19 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
             remaining_time = time - dist - 1
             if remaining_time <= 0:
                 continue
-            if valves_state[rooms_ref[neighbor]]:
+            bit = 1 << rooms_ref[neighbor]
+            if bitmask & bit:
                 continue
-            neighbor_state = [True if rooms_ref[neighbor] == i else state for i, state in enumerate(valves_state)]
+            neighbor_state = bitmask | bit
             neighbor_value = cur_value + (rooms[neighbor].flow_rate * remaining_time)
             max_val = max(max_val, dfs(rooms[neighbor], remaining_time, neighbor_state, neighbor_value, max_val))
         return max_val
 
     if part == 1:
-        return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))], 0, 0)
+        return dfs(start_room, time_left, 0, 0, 0)
     # part 2 answers
     # use the cache to find the answer
-    dfs(start_room, time_left, [False for _ in range(len(rooms_ref))], 0, 0)
+    dfs(start_room, time_left, 0, 0, 0)
     result = 0
     # sort it by the value
     sorted_cache = deque(sorted(cache.items(), key=lambda x: x[1], reverse=True))
@@ -119,14 +105,10 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
         if item[1] * 2 < result:
             break
         for against in reversed(sorted_cache):
-            for i in range(len(item[0][1])):
-                # if we found a valve that are opened by both parties, that won't be the answer
-                # since both parties shouldn't be opening the same valve
-                if item[0][1][i] and against[0][1][i]:
-                    break
-            else:
-                if result < item[1] + against[1]:
-                    result = item[1] + against[1]
+            # if we found a valve that are opened by both parties, that won't be the answer
+            # since both parties shouldn't be opening the same valve
+            if item[0][1] & against[0][1] == 0 and result < item[1] + against[1]:
+                result = item[1] + against[1]
     return result
 
 
