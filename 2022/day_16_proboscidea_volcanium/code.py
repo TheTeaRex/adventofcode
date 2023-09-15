@@ -82,7 +82,7 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
     rooms_ref = {}
     count = 0
     for room in rooms.values():
-        if room.flow_rate != 0 or room is start_room:
+        if room.flow_rate != 0:
             rooms_ref[room.name] = count
             count += 1
 
@@ -107,14 +107,27 @@ def solution(start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
 
     if part == 1:
         return dfs(start_room, time_left, [False for _ in range(len(rooms_ref))], 0, 0)
-    else:
-        result = 0
-        for i in creates_all_combos_valve_states(len(rooms_ref)):
-            result = max(
-                result,
-                dfs(start_room, time_left, i, 0, 0) + dfs(start_room, time_left, [False if state else True for state in i], 0, 0)
-            )
-        return result
+    # part 2 answers
+    # use the cache to find the answer
+    dfs(start_room, time_left, [False for _ in range(len(rooms_ref))], 0, 0)
+    result = 0
+    # sort it by the value
+    sorted_cache = deque(sorted(cache.items(), key=lambda x: x[1], reverse=True))
+    while sorted_cache:
+        item = sorted_cache.popleft()
+        # since the list is sorted, if item's value * 2 is smaller than result, no point on looking more
+        if item[1] * 2 < result:
+            break
+        for against in reversed(sorted_cache):
+            for i in range(len(item[0][1])):
+                # if we found a valve that are opened by both parties, that won't be the answer
+                # since both parties shouldn't be opening the same valve
+                if item[0][1][i] and against[0][1][i]:
+                    break
+            else:
+                if result < item[1] + against[1]:
+                    result = item[1] + against[1]
+    return result
 
 
 def prints_rooms(rooms: Dict[str, Room]) -> None:
