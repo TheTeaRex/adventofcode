@@ -11,15 +11,9 @@ class Jet(object):
 
     @property
     def current(self) -> str:
-        direction = self.order[self.current_id]
+        direction = self.order[self.current_id % len(self.order)]
         self.next()
-        if direction == '<':
-            return (-1, 0)
-        else:
-            return (1, 0)
+        return direction
 
     def next(self) -> None:
-        if self.current_id == len(self.order) - 1:
-            self.current_id = 0
-        else:
-            self.current_id += 1
+        self.current_id += 1
