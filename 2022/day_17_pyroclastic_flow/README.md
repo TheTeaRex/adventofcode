@@ -348,3 +348,7 @@ The elephants are not impressed by your simulation. They demand to know how tall
 In the example above, the tower would be `1514285714288` units tall!
 
 How tall will the tower be after `1000000000000` rocks have stopped?
+
+Your puzzle answer was `1566272189352`.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
