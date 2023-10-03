@@ -43,3 +43,7 @@ Instead, consider only cube sides that could be reached by the water and steam a
 In the larger example above, exactly one cube of air is trapped within the lava droplet (at `2,2,5`), so the exterior surface area of the lava droplet is `58`.
 
 What is the exterior surface area of your scanned lava droplet?
+
+Your puzzle answer was `2044`.
+
+Both parts of this puzzle are complete! They provide two gold stars: **
