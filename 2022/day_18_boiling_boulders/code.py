@@ -56,16 +56,17 @@ class Solution(object):
         BFS to flood-filled the a finited box
         when we reach a node where it's a droplet, surface += 1
         """
-        seen = set()
+        size = self.maxb - self.minb + 1
+        seen = [[[False for _ in range(size)] for _ in range(size)] for _ in range(size)]
         q = [(self.minb, self.minb, self.minb)]
         result = 0
         while q:
-            item = q.pop()
-            if item in seen:
+            x, y, z= q.pop()
+            if seen[x][y][z]:
                 continue
-            seen.add(item)
+            seen[x][y][z] = True
             for dx, dy, dz in self.neighbors:
-                nx, ny, nz = item[0] + dx, item[1] + dy, item[2] + dz
+                nx, ny, nz = x + dx, y + dy, z + dz
                 nitem = (nx, ny, nz)
                 if self.minb <= nx <= self.maxb and self.minb <= ny <= self.maxb and self.minb <= nz <= self.maxb:
                     if nitem in self.droplets:
