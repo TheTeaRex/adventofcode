@@ -2,13 +2,16 @@
 
 import os
 
-with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r') as f:
+with open(
+    f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+) as f:
     text = f.read()
 
 # lower case minus 96
 # upper case minus 38
-#text = "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"
-lines = text.split('\n')
+# pylint: disable=C0301
+# text = "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"
+lines = text.split("\n")
 
 # part 1
 result = 0

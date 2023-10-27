@@ -8,7 +8,7 @@ import re
 from typing import Dict, List, Tuple
 
 
-class Solution(object):
+class Solution:
     def __init__(self, filename: str) -> None:
         """
         bps: stores all the blueprints
@@ -19,8 +19,8 @@ class Solution(object):
         part1: answer to part 1, need to run self.solution1() to calculate the answer though
         part2: answer to part 2, need to run self.solution2() to calculate the answer though
         """
-        lines = self.read_file(filename).split('\n')
-        self.mats = ['ore', 'clay', 'obsidian']
+        lines = self.read_file(filename).split("\n")
+        self.mats = ["ore", "clay", "obsidian"]
         self.bps = []
         self.bps_max_mats = []
         self.set_blueprints(lines)
@@ -28,16 +28,17 @@ class Solution(object):
         self.part1 = 0
         self.part2 = 1
 
+    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
         """
         Typical file read
         Output: the str of the file
         """
-        f = open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r')
-        text = f.read()
-        f.close()
+        with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+            text = f.read()
         return text
 
+    # pylint: disable=C0116
     def set_blueprints(self, lines: List[str]) -> None:
         """
         Given the list of str after reading in the file
@@ -46,10 +47,10 @@ class Solution(object):
         for line in lines:
             bp = []
             mats_required = [0, 0, 0]
-            robot_recipes = line.split(': ')[1].split('. ')
+            robot_recipes = line.split(": ")[1].split(". ")
             for robot in robot_recipes:
                 recipe = []
-                for quatity, ingredient in re.findall(r'(\d+) (\w+)', robot):
+                for quatity, ingredient in re.findall(r"(\d+) (\w+)", robot):
                     i = int(quatity)
                     j = self.mats.index(ingredient)
                     recipe.append((i, j))
@@ -59,6 +60,7 @@ class Solution(object):
             self.bps.append(bp)
             self.bps_max_mats.append(mats_required)
 
+    # pylint: disable=C0116
     def get_potential_max_geode(self, time: int) -> int:
         """
         Given the time, it will give you what is the potential geode you can get
@@ -71,12 +73,21 @@ class Solution(object):
             result += i + 1
         return result
 
-    def dfs(self, bp: List[List[Tuple[int, int]]], max_mats: List[int], cache: Dict[List[int], int], time: int, robots: List[int], mats: List[int]):
+    # pylint: disable=C0116,R0913,R0914
+    def dfs(
+        self,
+        bp: List[List[Tuple[int, int]]],
+        max_mats: List[int],
+        cache: Dict[List[int], int],
+        time: int,
+        robots: List[int],
+        mats: List[int],
+    ):
         """
         Given a blueprint, use DFS to return the highest amount of geode that you can farm
 
         Note: Pruning/optimization technic from the internet
-        - For each robot type, we only build X number of them that is equal to the max amount required to build any robots
+        - For each robot type, we only build X of them that is equal to the max amount required to build any robots
           So if the most expensive robot requires 4 ores, then we only build 4 ore robots for that blueprint
         - Calculate the potential maximum of geode by assuming that we can build a geode robot at each time step.
           If that estimation is less or equal than the currently known maximal amount of geode, move on
@@ -104,7 +115,10 @@ class Solution(object):
                 # if we dont' have that specific robot, can't farm that mat, so no point for timeskipping
                 if robots[mat_index] == 0:
                     break
-                time_skip = max(time_skip, math.ceil((mat_required - mats[mat_index]) / robots[mat_index]))
+                time_skip = max(
+                    time_skip,
+                    math.ceil((mat_required - mats[mat_index]) / robots[mat_index]),
+                )
             else:
                 time_left = time - time_skip - 1
                 # no time left after time_skip, move on
@@ -119,12 +133,16 @@ class Solution(object):
                 for a in range(3):
                     new_mats[a] = min(new_mats[a], max_mats[a] * time_left)
 
-                max_geode = max(max_geode, self.dfs(bp, max_mats, cache, time_left, new_robots, new_mats))
+                max_geode = max(
+                    max_geode,
+                    self.dfs(bp, max_mats, cache, time_left, new_robots, new_mats),
+                )
 
         cache[index] = max_geode
         self.cur_max = max(self.cur_max, max_geode)
         return max_geode
 
+    # pylint: disable=C0116
     def solution1(self) -> None:
         """
         Run this to calculate part 1's answer
@@ -132,8 +150,11 @@ class Solution(object):
         """
         for i, bp in enumerate(self.bps):
             self.cur_max = 0
-            self.part1 += (i + 1) * self.dfs(bp, self.bps_max_mats[i], {}, 24, [1, 0, 0, 0], [0, 0, 0, 0])
+            self.part1 += (i + 1) * self.dfs(
+                bp, self.bps_max_mats[i], {}, 24, [1, 0, 0, 0], [0, 0, 0, 0]
+            )
 
+    # pylint: disable=C0116
     def solution2(self) -> None:
         """
         Run this to calculate part 2's answer
@@ -141,12 +162,14 @@ class Solution(object):
         """
         for i, bp in enumerate(self.bps[:3]):
             self.cur_max = 0
-            self.part2 *= self.dfs(bp, self.bps_max_mats[i], {}, 32, [1, 0, 0, 0], [0, 0, 0, 0])
+            self.part2 *= self.dfs(
+                bp, self.bps_max_mats[i], {}, 32, [1, 0, 0, 0], [0, 0, 0, 0]
+            )
 
 
 if __name__ == "__main__":
-    solution = Solution('input')
+    solution = Solution("input")
     solution.solution1()
-    print(f'Part 1: {solution.part1}')
+    print(f"Part 1: {solution.part1}")
     solution.solution2()
-    print(f'Part 2: {solution.part2}')
+    print(f"Part 2: {solution.part2}")

@@ -6,46 +6,51 @@ from typing import List
 from jet import Jet
 
 
-class Solution(object):
+class Solution():
     def __init__(self, filename: str, num: int) -> None:
         self.jet = Jet(self.read_file(filename))
         self.rocks = [
-            [30], # 0b0011110
-            [8, 28, 8], # 0b0001000, 0b0011100, 0b0001000
-            [28, 4, 4], # 0b0011100, 0b0000100, 0b0000100
-            [16, 16, 16, 16], # 0b0010000 x4
-            [24, 24] # 0b0011000 x2
+            [30],  # 0b0011110
+            [8, 28, 8],  # 0b0001000, 0b0011100, 0b0001000
+            [28, 4, 4],  # 0b0011100, 0b0000100, 0b0000100
+            [16, 16, 16, 16],  # 0b0010000 x4
+            [24, 24],  # 0b0011000 x2
         ]
         self.seen = {}
         self.result = 0
         self.solution(num)
 
+    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
-        f = open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r')
-        text = f.read()
-        f.close()
+        with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+            text = f.read()
         return text
 
+    # pylint: disable=C0116
     def prints_rock(self, rock: List[int]) -> None:
         """
         prints out the rock formation
         """
         for i in rock[::-1]:
-            print(format(i, '07b'))
+            print(format(i, "07b"))
 
+    # pylint: disable=C0116
     def prints_chamber(self, chamber: List[int]) -> None:
         """
         prints out the chamber
         """
-        for i in chamber[:-len(chamber):-1]:
+        for i in chamber[: -len(chamber) : -1]:
             line = f'{format(i, "07b")}'
-            line = line.replace('1', '#')
-            line = line.replace('0', '.')
-            line = '|' + line[1:len(line) - 1] + '|'
+            line = line.replace("1", "#")
+            line = line.replace("0", ".")
+            line = "|" + line[1 : len(line) - 1] + "|"
             print(line)
-        print('+-------+')
+        print("+-------+")
 
-    def can_rock_move_sideway_then_down(self, rock: List[int], jet_dir: str, chamber: List[int], level: int) -> List:
+    # pylint: disable=C0116,R0912
+    def can_rock_move_sideway_then_down(
+        self, rock: List[int], jet_dir: str, chamber: List[int], level: int
+    ) -> List:
         """
         checks to see if the rock can move sideway according to the jet direction
         if so, move there, if not, stay put
@@ -57,7 +62,7 @@ class Solution(object):
         Chamber - the current chamber status
         """
         next_to_wall = False
-        if jet_dir == '>':
+        if jet_dir == ">":
             # check if next to wall
             for row in rock:
                 if row & 1 != 0:
@@ -65,7 +70,7 @@ class Solution(object):
                     break
             else:
                 new_position = [i >> 1 for i in rock]
-        else: # if dir == '<'
+        else:  # if dir == '<'
             # check if next to wall
             for row in rock:
                 if row & 64 != 0:
@@ -94,6 +99,7 @@ class Solution(object):
         if settled:
             for i in range(level, level + len(rock)):
                 if rock[i - level] & chamber[i] == 1:
+                    # pylint: disable=W0719
                     raise Exception
                 chamber[i] = rock[i - level] | chamber[i]
             while chamber[-1] == 0:
@@ -101,11 +107,12 @@ class Solution(object):
 
         return [settled, rock, chamber]
 
+    # pylint: disable=C0116,R0914
     def solution(self, num: int) -> None:
         """
         simulate the rock drops until a cycle is found, then do the math
         """
-        chamber = [511] # 0b1111111
+        chamber = [511]  # 0b1111111
         heights = []
 
         for i in range(num):
@@ -114,7 +121,9 @@ class Solution(object):
             position = len(chamber) - len(rock)
             while True:
                 jet_dir = self.jet.current
-                settled, rock, chamber = self.can_rock_move_sideway_then_down(rock, jet_dir, chamber, position)
+                settled, rock, chamber = self.can_rock_move_sideway_then_down(
+                    rock, jet_dir, chamber, position
+                )
                 position -= 1
                 if settled:
                     break
@@ -124,15 +133,18 @@ class Solution(object):
             chamber_index = 0
             for a, b in enumerate(chamber[-8::]):
                 chamber_index = chamber_index | b << (a * 8)
-            index = (i % len(self.rocks), (self.jet.current_id - 1) % len(self.jet.order), chamber_index)
+            index = (
+                i % len(self.rocks),
+                (self.jet.current_id - 1) % len(self.jet.order),
+                chamber_index,
+            )
             if index in self.seen:
                 # cycle found
                 break
-            else:
-                self.seen[index] = i
+            self.seen[index] = i
         else:
             # if there is not cycle, it will sim the whole thing and spit out the answer
-           self.result = len(chamber) - 1
+            self.result = len(chamber) - 1
 
         base_index = self.seen[index]
         base_height = heights[base_index - 1] - 1
@@ -145,8 +157,8 @@ class Solution(object):
 
 if __name__ == "__main__":
     # Part 1 solution
-    solution1 = Solution('input', 2022)
-    print(f'Part 1: {solution1.result}')
+    solution1 = Solution("input", 2022)
+    print(f"Part 1: {solution1.result}")
     # Part 2 solution
-    solution2 = Solution('input', 1000000000000)
-    print(f'Part 2: {solution2.result}')
+    solution2 = Solution("input", 1000000000000)
+    print(f"Part 2: {solution2.result}")
