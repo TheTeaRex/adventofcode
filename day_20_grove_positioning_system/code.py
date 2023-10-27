@@ -7,6 +7,12 @@ from typing import List
 
 class Solution(object):
     def __init__(self, filename: str) -> None:
+        """
+        numlist: to store the parse nums
+        listsize: len(numlist)
+        part1: answer for part 1, required to run solution1()
+        part2: answer for part 2, required to run solution2()
+        """
         lines = self.read_file(filename).split('\n')
         self.numlist = self.parse_nums(lines)
         self.listsize = len(self.numlist)
@@ -24,19 +30,46 @@ class Solution(object):
         return text
 
     def parse_nums(self, lines: List[str]) -> List[int]:
+        """
+        Given the list of str, convert them to list of int
+        """
         return [int(x) for x in lines]
 
-    def move_nums(self) -> List[int]:
+    def move_nums(self, for_part_2: bool=False) -> List[int]:
+        """
+        Takes a boolean parameter to indicate if we are solving for part 2
+        otherwise, assuming False, we are solving for part 1
+
+        Part 1:
+        Mix up the numbers once
+        Do not use decryption key
+
+        Part 2:
+        Mix up the numbers ten times
+        Decryption key was used
+        """
+        key = 811589153
+        cycle = 1
+        if for_part_2:
+            cycle = 10
+
         result = [x for x in range(self.listsize)]
-        for i, num in enumerate(self.numlist):
-            pos = result.index(i)
-            if num != 0:
-                result.pop(pos)
-                to_pos = (pos + num) % (self.listsize - 1)
-            else:
-                continue
-            result.insert(to_pos, i)
+
+        for _ in range(cycle):
+            for i, num in enumerate(self.numlist):
+                pos = result.index(i)
+                if num != 0:
+                    if for_part_2:
+                        num = ((num % (self.listsize - 1)) * (key % (self.listsize - 1))) % (self.listsize - 1)
+                    result.pop(pos)
+                    to_pos = (pos + num) % (self.listsize - 1)
+                else:
+                    continue
+                result.insert(to_pos, i)
+        if for_part_2:
+            return [self.numlist[num] * key for num in result]
         return [self.numlist[num] for num in result]
+
 
     def solution1(self) -> None:
         """
@@ -44,7 +77,7 @@ class Solution(object):
         the answer is store in self.part1
         """
         self.part1 = 0
-        final_list = self.move_nums()
+        final_list = self.move_nums(False)
         index = final_list.index(0)
         for pos in [1000, 2000, 3000]:
             pos = (pos + index) % self.listsize
@@ -55,7 +88,12 @@ class Solution(object):
         Run this to calculate part 2's answer
         the answer is store in self.part2
         """
-        pass
+        self.part2 = 0
+        final_list = self.move_nums(True)
+        index = final_list.index(0)
+        for pos in [1000, 2000, 3000]:
+            pos = (pos + index) % self.listsize
+            self.part2 += final_list[pos]
 
 
 if __name__ == "__main__":
