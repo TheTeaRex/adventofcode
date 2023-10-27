@@ -1,1 +1,1 @@
-This is just a repo to store TheTeaRex's advent of code solution
+This is a repo to store Alan's advent of code 2022 solution
