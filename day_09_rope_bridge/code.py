@@ -3,12 +3,17 @@
 import os
 from typing import List
 
+
+# pylint: disable=C0116
 def read_file() -> str:
-    f = open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r')
-    text = f.read()
-    f.close()
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+    ) as f:
+        text = f.read()
     return text
 
+
+# pylint: disable=C0116
 def returns_tail_position(head: List[int], tail: List[int]) -> List[int]:
     # tail doesn't need to move since it's 1 step within the head in all directions
     if abs(tail[0] - head[0]) <= 1 and abs(tail[1] - head[1]) <= 1:
@@ -28,24 +33,14 @@ def returns_tail_position(head: List[int], tail: List[int]) -> List[int]:
 
     return tail
 
+
+# pylint: disable=C0116
 def improved_part_1(steps: List[str], num_knots: int = 2) -> int:
     coordinates = {
-        'U': {
-            'index': 1,
-            'diff': 1
-        },
-        'R': {
-            'index': 0,
-            'diff': 1
-        },
-        'D': {
-            'index': 1,
-            'diff': -1
-        },
-        'L': {
-            'index': 0,
-            'diff': -1
-        }
+        "U": {"index": 1, "diff": 1},
+        "R": {"index": 0, "diff": 1},
+        "D": {"index": 1, "diff": -1},
+        "L": {"index": 0, "diff": -1},
     }
     snake = []
     visited = set()
@@ -55,9 +50,9 @@ def improved_part_1(steps: List[str], num_knots: int = 2) -> int:
     for step in steps:
         if len(step) == 0:
             break
-        direction, num = step.split(' ')
+        direction, num = step.split(" ")
         for _ in range(int(num)):
-            snake[0][coordinates[direction]['index']] += coordinates[direction]['diff']
+            snake[0][coordinates[direction]["index"]] += coordinates[direction]["diff"]
             # move the rest of the body per step
             for i in range(1, len(snake)):
                 snake[i] = returns_tail_position(snake[i - 1], snake[i])
@@ -66,7 +61,8 @@ def improved_part_1(steps: List[str], num_knots: int = 2) -> int:
 
     return len(visited)
 
+
 if __name__ == "__main__":
-    text = read_file().split('\n')
-    print(f'Part 1: {improved_part_1(text)}')
-    print(f'Part 2: {improved_part_1(text, 10)}')
+    text = read_file().split("\n")
+    print(f"Part 1: {improved_part_1(text)}")
+    print(f"Part 2: {improved_part_1(text, 10)}")

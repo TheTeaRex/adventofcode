@@ -7,13 +7,14 @@ import os
 from typing import List
 
 
+# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    f = open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r')
-    text = f.read()
-    f.close()
+    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+        text = f.read()
     return text
 
 
+# pylint: disable=C0116
 def parse_data(lines: List[str]) -> List[dict]:
     packets = []
     i = 0
@@ -23,12 +24,13 @@ def parse_data(lines: List[str]) -> List[dict]:
     return packets
 
 
+# pylint: disable=C0116
 def solution_part_1(packets) -> int:
-    '''
+    """
     take the list of packets, make comparison two at a time
     collect the "right" order indices (starts at 1) and
     return the sum of the indices
-    '''
+    """
     result = []
     i = 0
     while i < len(packets):
@@ -40,6 +42,7 @@ def solution_part_1(packets) -> int:
     return sum(result)
 
 
+# pylint: disable=C0116
 def solution_part_2_through_sorting(packets) -> int:
     a, b = [[2]], [[6]]
     packets += [a, b]
@@ -47,7 +50,9 @@ def solution_part_2_through_sorting(packets) -> int:
     while i < len(packets):
         is_right_order = is_pair_in_right_order(packets[i - 1], packets[i])
         j = i
-        while not is_right_order and j > 0: # ideally this wouldn't let j goes smaller than 1
+        while (
+            not is_right_order and j > 0
+        ):  # ideally this wouldn't let j goes smaller than 1
             temp = packets[j]
             packets[j] = packets[j - 1]
             packets[j - 1] = temp
@@ -57,14 +62,15 @@ def solution_part_2_through_sorting(packets) -> int:
 
     result = 1
     for i, v in enumerate(packets):
-        if v == a or v == b:
-            result *= (i + 1)
+        if v in [a, b]:
+            result *= i + 1
     return result
 
 
+# pylint: disable=C0116
 def solution_part_2_no_sorting(packets) -> int:
     a, b = [[2]], [[6]]
-    if is_pair_in_right_order(a, b): # indices started 1
+    if is_pair_in_right_order(a, b):  # indices started 1
         cnta, cntb = 1, 2
     else:
         cnta, cntb = 2, 1
@@ -75,18 +81,24 @@ def solution_part_2_no_sorting(packets) -> int:
 
     return cnta * cntb
 
+
+# pylint: disable=C0116,R0911
 def is_pair_in_right_order(left, right) -> bool:
-    '''
+    """
     Given a pair of lists
     Return if they are in the right order
-    '''
+    """
     i = 0
     while i < len(left) or i < len(right):
-        if i >= len(left): return True
-        if i >= len(right): return False
+        if i >= len(left):
+            return True
+        if i >= len(right):
+            return False
         if isinstance(left[i], int) and isinstance(right[i], int):
-            if left[i] < right[i]: return True
-            elif left[i] > right[i]: return False
+            if left[i] < right[i]:
+                return True
+            if left[i] > right[i]:
+                return False
         elif isinstance(left[i], list) and isinstance(right[i], list):
             result = is_pair_in_right_order(left[i], right[i])
             if result is not None:
@@ -107,10 +119,10 @@ def is_pair_in_right_order(left, right) -> bool:
 
 
 if __name__ == "__main__":
-    text = read_file('input').split('\n')
+    text = read_file("input").split("\n")
     packets = parse_data(text)
-    print(f'Part 1: {solution_part_1(packets)}')
+    print(f"Part 1: {solution_part_1(packets)}")
     packets2 = copy.deepcopy(packets)
-    print(f'Part 2 with sorting: {solution_part_2_through_sorting(packets2)}')
+    print(f"Part 2 with sorting: {solution_part_2_through_sorting(packets2)}")
     packets3 = copy.deepcopy(packets)
-    print(f'Part 2 with no sorting: {solution_part_2_no_sorting(packets3)}')
+    print(f"Part 2 with no sorting: {solution_part_2_no_sorting(packets3)}")

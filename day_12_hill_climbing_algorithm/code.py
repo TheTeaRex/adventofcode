@@ -5,15 +5,19 @@ import os
 from grid import Grid
 
 
+# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    f = open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r')
-    text = f.read()
-    f.close()
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
+        text = f.read()
     return text
 
 
 if __name__ == "__main__":
-    text = read_file('input').split('\n')
+    text = read_file("input").split("\n")
     grid = Grid(text)
-    print(f'Part 1: {grid.find_shortest_path_from_the_end(grid.end, grid.start)} steps')
-    print(f'Part 2: {grid.find_shortest_path_from_the_end(grid.end)} steps')
+    print(f"Part 1: {grid.find_shortest_path_from_the_end(grid.end, grid.start)} steps")
+    print(f"Part 2: {grid.find_shortest_path_from_the_end(grid.end)} steps")

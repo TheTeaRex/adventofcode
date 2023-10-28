@@ -1,19 +1,20 @@
 #! /usr/bin/python3
 
 
-import helper
 import os
+from typing import List
+import helper
 from cave import Cave
-from typing import List, Tuple
 
 
+# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    f = open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r')
-    text = f.read()
-    f.close()
+    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+        text = f.read()
     return text
 
 
+# pylint: disable=C0116
 def remove_overlapped_ranges(ranges: List[List[int]]):
     ranges = sorted(ranges, key=lambda r: r[0])
     result = []
@@ -28,6 +29,7 @@ def remove_overlapped_ranges(ranges: List[List[int]]):
     return result
 
 
+# pylint: disable=C0116
 def solution_part_1(cave: Cave, row: int) -> int:
     ranges = []
     sensors = []
@@ -38,8 +40,15 @@ def solution_part_1(cave: Cave, row: int) -> int:
         up = sensor.coordinate[1] - sensor.detection_distance
         down = sensor.coordinate[1] + sensor.detection_distance
         if up <= row <= down:
-            one = sensor.detection_distance - abs(row - sensor.coordinate[1]) + sensor.coordinate[0]
-            two = -(sensor.detection_distance - abs(row - sensor.coordinate[1])) + sensor.coordinate[0]
+            one = (
+                sensor.detection_distance
+                - abs(row - sensor.coordinate[1])
+                + sensor.coordinate[0]
+            )
+            two = (
+                -(sensor.detection_distance - abs(row - sensor.coordinate[1]))
+                + sensor.coordinate[0]
+            )
             ranges.append([min(one, two), max(one, two)])
 
     ranges = remove_overlapped_ranges(ranges)
@@ -49,7 +58,10 @@ def solution_part_1(cave: Cave, row: int) -> int:
     # get rid of the beacon count on that row
     for beacon in cave.beacons:
         for item in ranges:
-            if beacon.coordinate[1] == row and item[0] <= beacon.coordinate[0] <= item[1]:
+            if (
+                beacon.coordinate[1] == row
+                and item[0] <= beacon.coordinate[0] <= item[1]
+            ):
                 result -= 1
 
     # get rid of the sensor count on that row
@@ -62,6 +74,7 @@ def solution_part_1(cave: Cave, row: int) -> int:
     return result
 
 
+# pylint: disable=C0116,R0912
 def solution_part_2(cave: Cave, grid_size: int) -> int:
     answer = None
     intersections = []
@@ -81,7 +94,9 @@ def solution_part_2(cave: Cave, grid_size: int) -> int:
 
     for intersection in intersections:
         for sensor in cave.sensors:
-            if helper.is_within_distance(intersection, sensor.coordinate, sensor.detection_distance):
+            if helper.is_within_distance(
+                intersection, sensor.coordinate, sensor.detection_distance
+            ):
                 break
         else:
             answer = intersection
@@ -89,12 +104,13 @@ def solution_part_2(cave: Cave, grid_size: int) -> int:
 
     if answer is None:
         # should never reach this
-        raise Exception('Error: no valid solution found for part 2')
+        # pylint: disable=W0719
+        raise Exception("Error: no valid solution found for part 2")
     return answer[0] * 4000000 + answer[1]
 
 
 if __name__ == "__main__":
-    text = read_file('input').split('\n')
+    text = read_file("input").split("\n")
     cave = Cave(text)
-    print(f'Part 1: {solution_part_1(cave, 2000000)}')
-    print(f'Part 2: {solution_part_2(cave, 4000000)}')
+    print(f"Part 1: {solution_part_1(cave, 2000000)}")
+    print(f"Part 2: {solution_part_2(cave, 4000000)}")

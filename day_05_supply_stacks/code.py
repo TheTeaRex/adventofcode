@@ -4,10 +4,12 @@ import collections
 import copy
 import os
 
-with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r') as f:
+with open(
+    f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+) as f:
     text = f.read()
 
-lines = text.split('\n')
+lines = text.split("\n")
 
 # part 1
 # getting the number of stacks
@@ -21,7 +23,7 @@ while i < len(lines):
     if lines[i][1].isnumeric():
         break
     for j in range(1, len(lines[i]), 4):
-        if lines[i][j] != ' ':
+        if lines[i][j] != " ":
             stacks[j // 4].appendleft(lines[i][j])
     i += 1
 
@@ -32,13 +34,13 @@ stacks2 = copy.deepcopy(stacks)
 i += 2
 logstart = i
 while i < len(lines):
-    items = lines[i].split(' ')
+    items = lines[i].split(" ")
     for _ in range(int(items[1])):
         crate = stacks[int(items[3]) - 1].pop()
         stacks[int(items[5]) - 1].append(crate)
     i += 1
 
-print(''.join([stack[-1] for stack in stacks]))
+print("".join([stack[-1] for stack in stacks]))
 
 # part 2
 stacks = [[] for _ in range(size)]
@@ -50,19 +52,19 @@ while i < len(lines):
 j = i - 1
 while j >= 0:
     for k in range(1, len(lines[j]), 4):
-        if lines[j][k] != ' ':
+        if lines[j][k] != " ":
             stacks[k // 4].append(lines[j][k])
     j -= 1
 
 # get to the rearrange log
 i += 2
 while i < len(lines):
-    items = lines[i].split(' ')
+    items = lines[i].split(" ")
     num_move = int(items[1])
     f = int(items[3]) - 1
     t = int(items[5]) - 1
     stacks[t] += stacks[f][-num_move:]
-    stacks[f] = stacks[f][:len(stacks[f]) - num_move]
+    stacks[f] = stacks[f][: len(stacks[f]) - num_move]
     i += 1
 
-print(''.join([stack[-1] for stack in stacks]))
+print("".join([stack[-1] for stack in stacks]))
