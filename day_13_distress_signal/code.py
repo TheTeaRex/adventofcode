@@ -8,7 +8,11 @@ from typing import List
 
 
 def read_file(file_name: str) -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
         text = f.read()
     return text
 
@@ -77,7 +81,7 @@ def solution_part_2_no_sorting(packets) -> int:
     return cnta * cntb
 
 
-def is_pair_in_right_order(left, right) -> bool:
+def is_pair_in_right_order(left, right) -> bool:  # noqa: C901
     """
     Given a pair of lists
     Return if they are in the right order

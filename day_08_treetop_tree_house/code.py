@@ -5,7 +5,9 @@ from typing import List
 
 
 def read_file() -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+    ) as f:
         text = f.read()
     return text
 
@@ -15,7 +17,7 @@ def map_the_input(text: str) -> List[List[int]]:
     return [[int(c) for c in row] for row in rows]
 
 
-def solution_part_1(grid: List[List[int]]) -> int:
+def solution_part_1(grid: List[List[int]]) -> int:  # noqa: C901
     max_scenic_score = 0
     visible_trees = (len(grid) * len(grid[0])) - ((len(grid) - 2) * (len(grid[0]) - 2))
 

@@ -4,7 +4,7 @@
 from typing import List
 
 
-class Jet():
+class Jet:
     def __init__(self, order: List[str]) -> None:
         self.order = list(order)
         self.current_id = 0

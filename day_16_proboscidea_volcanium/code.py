@@ -9,7 +9,11 @@ from room import Room
 
 
 def read_file(file_name: str) -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
         text = f.read()
     return text
 
@@ -57,7 +61,7 @@ def maps_dist_from_room_to_room(rooms: Dict[str, Room]) -> Dict[str, Room]:
     return rooms
 
 
-def solution(
+def solution(  # noqa: C901
     start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
 ) -> int:
     """

@@ -6,7 +6,7 @@ from typing import List
 from jet import Jet
 
 
-class Solution():
+class Solution:
     def __init__(self, filename: str, num: int) -> None:
         self.jet = Jet(self.read_file(filename))
         self.rocks = [
@@ -21,7 +21,11 @@ class Solution():
         self.solution(num)
 
     def read_file(self, file_name: str) -> str:
-        with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+        with open(
+            f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+            "r",
+            encoding="utf-8",
+        ) as f:
             text = f.read()
         return text
 
@@ -36,15 +40,15 @@ class Solution():
         """
         prints out the chamber
         """
-        for i in chamber[: -len(chamber) : -1]:
+        for i in chamber[: -len(chamber): -1]:
             line = f'{format(i, "07b")}'
             line = line.replace("1", "#")
             line = line.replace("0", ".")
-            line = "|" + line[1 : len(line) - 1] + "|"
+            line = "|" + line[1: len(line) - 1] + "|"
             print(line)
         print("+-------+")
 
-    def can_rock_move_sideway_then_down(
+    def can_rock_move_sideway_then_down(  # noqa: C901
         self, rock: List[int], jet_dir: str, chamber: List[int], level: int
     ) -> List:
         """

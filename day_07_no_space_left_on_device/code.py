@@ -3,6 +3,7 @@
 import collections
 import os
 
+
 class Node:
     def __init__(self, name, is_dir, parent=None, size=0):
         self.name = name
@@ -34,10 +35,14 @@ class Node:
         else:
             print(f'{"  " * level}- {self.name} (file, size={self.size})')
 
+
 def read_file():
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+    ) as f:
         text = f.read()
     return text
+
 
 def map_filesystem_from_string(text):
     lines = text.split("\n")
