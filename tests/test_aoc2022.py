@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 from day_01_calorie_counting import day01
+from day_02_rock_paper_scissors import day02
 import pytest
 
 
@@ -34,3 +35,13 @@ class TestAOC2022:
         solution = day01.Solution(filename)
         assert solution.part1 == answer["day01"][0]
         assert solution.part2 == answer["day01"][1]
+
+    def test_day02_example(self, example_filename, example_answer):
+        solution = day02.Solution(example_filename)
+        assert solution.part1 == example_answer["day02"][0]
+        assert solution.part2 == example_answer["day02"][1]
+
+    def test_day02(self, filename, answer):
+        solution = day02.Solution(filename)
+        assert solution.part1 == answer["day02"][0]
+        assert solution.part2 == answer["day02"][1]
