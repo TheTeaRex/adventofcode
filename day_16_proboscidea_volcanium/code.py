@@ -8,14 +8,16 @@ from typing import Dict, List
 from room import Room
 
 
-# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
         text = f.read()
     return text
 
 
-# pylint: disable=C0116
 def maps_rooms(lines: List[str]) -> Dict[str, Room]:
     """
     Input: processed input file in list of strs
@@ -36,7 +38,6 @@ def maps_rooms(lines: List[str]) -> Dict[str, Room]:
     return result
 
 
-# pylint: disable=C0116
 def maps_dist_from_room_to_room(rooms: Dict[str, Room]) -> Dict[str, Room]:
     """
     Take the given rooms and calculate the distances to every other room
@@ -60,8 +61,7 @@ def maps_dist_from_room_to_room(rooms: Dict[str, Room]) -> Dict[str, Room]:
     return rooms
 
 
-# pylint: disable=C0116
-def solution(
+def solution(  # noqa: C901
     start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
 ) -> int:
     """
@@ -127,7 +127,6 @@ def solution(
     return result
 
 
-# pylint: disable=C0116
 def prints_rooms(rooms: Dict[str, Room]) -> None:
     """
     Print info about all the given rooms

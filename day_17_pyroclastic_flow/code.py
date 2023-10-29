@@ -6,7 +6,7 @@ from typing import List
 from jet import Jet
 
 
-class Solution():
+class Solution:
     def __init__(self, filename: str, num: int) -> None:
         self.jet = Jet(self.read_file(filename))
         self.rocks = [
@@ -20,13 +20,15 @@ class Solution():
         self.result = 0
         self.solution(num)
 
-    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
-        with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+        with open(
+            f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+            "r",
+            encoding="utf-8",
+        ) as f:
             text = f.read()
         return text
 
-    # pylint: disable=C0116
     def prints_rock(self, rock: List[int]) -> None:
         """
         prints out the rock formation
@@ -34,21 +36,19 @@ class Solution():
         for i in rock[::-1]:
             print(format(i, "07b"))
 
-    # pylint: disable=C0116
     def prints_chamber(self, chamber: List[int]) -> None:
         """
         prints out the chamber
         """
-        for i in chamber[: -len(chamber) : -1]:
+        for i in chamber[: -len(chamber): -1]:
             line = f'{format(i, "07b")}'
             line = line.replace("1", "#")
             line = line.replace("0", ".")
-            line = "|" + line[1 : len(line) - 1] + "|"
+            line = "|" + line[1: len(line) - 1] + "|"
             print(line)
         print("+-------+")
 
-    # pylint: disable=C0116,R0912
-    def can_rock_move_sideway_then_down(
+    def can_rock_move_sideway_then_down(  # noqa: C901
         self, rock: List[int], jet_dir: str, chamber: List[int], level: int
     ) -> List:
         """
@@ -99,7 +99,6 @@ class Solution():
         if settled:
             for i in range(level, level + len(rock)):
                 if rock[i - level] & chamber[i] == 1:
-                    # pylint: disable=W0719
                     raise Exception
                 chamber[i] = rock[i - level] | chamber[i]
             while chamber[-1] == 0:
@@ -107,7 +106,6 @@ class Solution():
 
         return [settled, rock, chamber]
 
-    # pylint: disable=C0116,R0914
     def solution(self, num: int) -> None:
         """
         simulate the rock drops until a cycle is found, then do the math

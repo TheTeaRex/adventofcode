@@ -15,7 +15,6 @@ class Cave:
         self.beacon_coordinates_set = set()
         self.scans_the_cave(lines)
 
-    # pylint: disable=C0116
     def scans_the_cave(self, lines: List[str]) -> None:
         for line in lines:
             m = re.match(
@@ -30,7 +29,6 @@ class Cave:
             self.sensors.append(Sensor(sx, sy, dist))
             self.add_beacon_to_cave_if_not_exists(Beacon(bx, by))
 
-    # pylint: disable=C0116
     def add_beacon_to_cave_if_not_exists(self, beacon: Beacon) -> None:
         """
         checks if given beacon exists already using the coordinate
@@ -40,14 +38,12 @@ class Cave:
             self.beacons.append(beacon)
             self.beacon_coordinates_set.add(beacon.coordinate)
 
-    # pylint: disable=C0116
     def does_beacon_exist_in_given_coordinate(self, coordinate: Tuple[int]) -> bool:
         """
         checks if a beacon already recorded with the given coordinate
         """
         return coordinate in self.beacon_coordinates_set
 
-    # pylint: disable=C0116
     def gets_sensors_that_are_close_enough(self) -> Dict[Sensor, List[Sensor]]:
         """
         gathers all the sensors that could intersect when distance + 1

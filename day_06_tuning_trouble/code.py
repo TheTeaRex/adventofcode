@@ -3,7 +3,6 @@
 import os
 
 
-# pylint: disable=C0116
 def read_file():
     with open(
         f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
@@ -12,7 +11,6 @@ def read_file():
     return text
 
 
-# pylint: disable=C0116
 def solution(text, unique):
     j = 0
     buffer = set()
@@ -33,7 +31,6 @@ def solution(text, unique):
     return j
 
 
-# pylint: disable=C0116
 def better_solution(text, unique):
     buffer = set()
     i = j = 0

@@ -4,7 +4,6 @@ import os
 from typing import List
 
 
-# pylint: disable=C0116
 def read_file() -> str:
     with open(
         f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
@@ -13,7 +12,6 @@ def read_file() -> str:
     return text
 
 
-# pylint: disable=C0116
 def returns_tail_position(head: List[int], tail: List[int]) -> List[int]:
     # tail doesn't need to move since it's 1 step within the head in all directions
     if abs(tail[0] - head[0]) <= 1 and abs(tail[1] - head[1]) <= 1:
@@ -34,7 +32,6 @@ def returns_tail_position(head: List[int], tail: List[int]) -> List[int]:
     return tail
 
 
-# pylint: disable=C0116
 def improved_part_1(steps: List[str], num_knots: int = 2) -> int:
     coordinates = {
         "U": {"index": 1, "diff": 1},

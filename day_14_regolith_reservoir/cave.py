@@ -16,7 +16,6 @@ class Cave:
         self.units_of_sand_until_abyss = 0
         self.units_of_sand_until_block = 0
 
-    # pylint: disable=C0116
     def scan_for_rocks(self, lines: List[str], offset_lowest) -> Set[Tuple[int, int]]:
         """
         cave's lowest point is determine by whethere there is a floor or not
@@ -51,7 +50,6 @@ class Cave:
             self.cave_lowest_point += offset_lowest
         return rocks
 
-    # pylint: disable=C0116
     def print_cave(self, offset: int = 0) -> None:
         """
         if know grid size, can use offset to not print so much
@@ -65,7 +63,6 @@ class Cave:
         for line in cave:
             print("".join(line))
 
-    # pylint: disable=C0116
     def sand_drops(self) -> Tuple[int, int]:
         """
         simulate the sand drop
@@ -106,14 +103,12 @@ class Cave:
             break
         return sand
 
-    # pylint: disable=C0116
     def is_sand_in_abyss(self, sand: Tuple[int, int]) -> bool:
         """
         return True if sand is at the lowest rock's depth
         """
         return sand[1] >= self.cave_lowest_point
 
-    # pylint: disable=C0116
     def fills_sand_until_abyss(self) -> None:
         """
         fills sand until detects sand is at the lowest rock's depth
@@ -127,14 +122,12 @@ class Cave:
             i += 1
             self.units_of_sand_until_abyss += 1
 
-    # pylint: disable=C0116
     def is_sand_blocking_sand_start(self, sand: Tuple[int, int]) -> bool:
         """
         return True, if sand is piled up to the starting point
         """
         return sand == self.sand_start
 
-    # pylint: disable=C0116
     def fills_sand_until_block(self) -> None:
         """
         fills sand until the starting point is blocked

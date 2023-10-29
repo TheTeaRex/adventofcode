@@ -4,7 +4,6 @@ import os
 from typing import List
 
 
-# pylint: disable=C0116
 def read_file() -> str:
     with open(
         f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
@@ -13,7 +12,6 @@ def read_file() -> str:
     return text
 
 
-# pylint: disable=C0116
 def solution_part_1(instructions: List[str]) -> int:
     i = result = 0
     x_val = 1
@@ -42,7 +40,6 @@ def solution_part_1(instructions: List[str]) -> int:
     return result
 
 
-# pylint: disable=C0116
 def solution_part_2(instructions: List[str]) -> str:
     result = ""
     i = counter = 0

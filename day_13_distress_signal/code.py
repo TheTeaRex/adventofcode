@@ -7,14 +7,16 @@ import os
 from typing import List
 
 
-# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
         text = f.read()
     return text
 
 
-# pylint: disable=C0116
 def parse_data(lines: List[str]) -> List[dict]:
     packets = []
     i = 0
@@ -24,7 +26,6 @@ def parse_data(lines: List[str]) -> List[dict]:
     return packets
 
 
-# pylint: disable=C0116
 def solution_part_1(packets) -> int:
     """
     take the list of packets, make comparison two at a time
@@ -42,7 +43,6 @@ def solution_part_1(packets) -> int:
     return sum(result)
 
 
-# pylint: disable=C0116
 def solution_part_2_through_sorting(packets) -> int:
     a, b = [[2]], [[6]]
     packets += [a, b]
@@ -67,7 +67,6 @@ def solution_part_2_through_sorting(packets) -> int:
     return result
 
 
-# pylint: disable=C0116
 def solution_part_2_no_sorting(packets) -> int:
     a, b = [[2]], [[6]]
     if is_pair_in_right_order(a, b):  # indices started 1
@@ -82,8 +81,7 @@ def solution_part_2_no_sorting(packets) -> int:
     return cnta * cntb
 
 
-# pylint: disable=C0116,R0911
-def is_pair_in_right_order(left, right) -> bool:
+def is_pair_in_right_order(left, right) -> bool:  # noqa: C901
     """
     Given a pair of lists
     Return if they are in the right order

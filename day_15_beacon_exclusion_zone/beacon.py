@@ -1,7 +1,6 @@
 #! /usr/bin/python3
 
 
-# pylint: disable=R0903
 class Beacon:
     def __init__(self, x: int, y: int) -> None:
         self.coordinate = (x, y)

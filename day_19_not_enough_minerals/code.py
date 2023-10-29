@@ -28,7 +28,6 @@ class Solution:
         self.part1 = 0
         self.part2 = 1
 
-    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
         """
         Typical file read
@@ -38,7 +37,6 @@ class Solution:
             text = f.read()
         return text
 
-    # pylint: disable=C0116
     def set_blueprints(self, lines: List[str]) -> None:
         """
         Given the list of str after reading in the file
@@ -60,7 +58,6 @@ class Solution:
             self.bps.append(bp)
             self.bps_max_mats.append(mats_required)
 
-    # pylint: disable=C0116
     def get_potential_max_geode(self, time: int) -> int:
         """
         Given the time, it will give you what is the potential geode you can get
@@ -73,8 +70,7 @@ class Solution:
             result += i + 1
         return result
 
-    # pylint: disable=C0116,R0913,R0914
-    def dfs(
+    def dfs(  # noqa: C901
         self,
         bp: List[List[Tuple[int, int]]],
         max_mats: List[int],
@@ -142,7 +138,6 @@ class Solution:
         self.cur_max = max(self.cur_max, max_geode)
         return max_geode
 
-    # pylint: disable=C0116
     def solution1(self) -> None:
         """
         Run this to calculate part 1's answer
@@ -154,7 +149,6 @@ class Solution:
                 bp, self.bps_max_mats[i], {}, 24, [1, 0, 0, 0], [0, 0, 0, 0]
             )
 
-    # pylint: disable=C0116
     def solution2(self) -> None:
         """
         Run this to calculate part 2's answer

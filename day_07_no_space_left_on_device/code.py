@@ -3,6 +3,7 @@
 import collections
 import os
 
+
 class Node:
     def __init__(self, name, is_dir, parent=None, size=0):
         self.name = name
@@ -14,14 +15,12 @@ class Node:
     def __repr__(self):
         return self.name
 
-    # pylint: disable=C0116
     def get_size(self):
         if self.size != 0:
             return self.size
         if not self.is_dir:
             return self.size
         total = 0
-        # pylint: disable=C0206
         for item in self.children:
             total += self.children[item].get_size()
         self.size = total
@@ -31,19 +30,20 @@ class Node:
         if self.is_dir:
             self.get_size()
             print(f'{"  " * level}- {self.name} (dir, size={self.size})')
-            # pylint: disable=C0206
             for item in self.children:
                 self.children[item].print_tree(level + 1)
         else:
             print(f'{"  " * level}- {self.name} (file, size={self.size})')
 
-# pylint: disable=C0116
+
 def read_file():
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+    ) as f:
         text = f.read()
     return text
 
-# pylint: disable=C0116
+
 def map_filesystem_from_string(text):
     lines = text.split("\n")
     root = Node("/", True)

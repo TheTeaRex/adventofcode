@@ -6,14 +6,12 @@ import os
 from World import World
 
 
-# pylint: disable=C0116
 def read_file(file_name: str) -> str:
     with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
         text = f.read()
     return text
 
 
-# pylint: disable=C0116
 def solution(world: World, rounds, modulo: int, relief: int = 1) -> None:
     for _ in range(rounds):
         for monkey in world.monkeys:
@@ -23,7 +21,6 @@ def solution(world: World, rounds, modulo: int, relief: int = 1) -> None:
                 world.monkeys[to_monkey].catches_item(item)
 
 
-# pylint: disable=C0116
 def print_answer(world: World) -> None:
     result = sorted(
         world.monkeys, key=lambda monkey: monkey.num_of_inspections, reverse=True

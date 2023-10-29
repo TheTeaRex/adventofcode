@@ -7,14 +7,16 @@ import helper
 from cave import Cave
 
 
-# pylint: disable=C0116
 def read_file(file_name: str) -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+        "r",
+        encoding="utf-8",
+    ) as f:
         text = f.read()
     return text
 
 
-# pylint: disable=C0116
 def remove_overlapped_ranges(ranges: List[List[int]]):
     ranges = sorted(ranges, key=lambda r: r[0])
     result = []
@@ -29,8 +31,7 @@ def remove_overlapped_ranges(ranges: List[List[int]]):
     return result
 
 
-# pylint: disable=C0116
-def solution_part_1(cave: Cave, row: int) -> int:
+def solution_part_1(cave: Cave, row: int) -> int:  # noqa: C901
     ranges = []
     sensors = []
     result = 0
@@ -74,8 +75,7 @@ def solution_part_1(cave: Cave, row: int) -> int:
     return result
 
 
-# pylint: disable=C0116,R0912
-def solution_part_2(cave: Cave, grid_size: int) -> int:
+def solution_part_2(cave: Cave, grid_size: int) -> int:  # noqa: C901
     answer = None
     intersections = []
     sensors_that_could_intersect = cave.gets_sensors_that_are_close_enough()
@@ -104,7 +104,6 @@ def solution_part_2(cave: Cave, grid_size: int) -> int:
 
     if answer is None:
         # should never reach this
-        # pylint: disable=W0719
         raise Exception("Error: no valid solution found for part 2")
     return answer[0] * 4000000 + answer[1]
 

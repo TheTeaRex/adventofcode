@@ -4,21 +4,20 @@ import os
 from typing import List
 
 
-# pylint: disable=C0116
 def read_file() -> str:
-    with open(f'{os.path.dirname(os.path.realpath(__file__))}/input', 'r', encoding="utf-8") as f:
+    with open(
+        f"{os.path.dirname(os.path.realpath(__file__))}/input", "r", encoding="utf-8"
+    ) as f:
         text = f.read()
     return text
 
 
-# pylint: disable=C0116
 def map_the_input(text: str) -> List[List[int]]:
     rows = text.split("\n")
     return [[int(c) for c in row] for row in rows]
 
 
-# pylint: disable=C0116,R0912
-def solution_part_1(grid: List[List[int]]) -> int:
+def solution_part_1(grid: List[List[int]]) -> int:  # noqa: C901
     max_scenic_score = 0
     visible_trees = (len(grid) * len(grid[0])) - ((len(grid) - 2) * (len(grid[0]) - 2))
 

@@ -4,7 +4,6 @@
 from typing import Dict
 
 
-# pylint: disable=R0903
 class Room:
     def __init__(
         self, name: str, flow_rate: int, to_room_names: Dict[str, int]
