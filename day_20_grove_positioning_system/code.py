@@ -19,7 +19,6 @@ class Solution:
         self.part1 = 0
         self.part2 = 0
 
-    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
         """
         Typical file read
@@ -33,14 +32,12 @@ class Solution:
             text = f.read()
         return text
 
-    # pylint: disable=C0116
     def parse_nums(self, lines: List[str]) -> List[int]:
         """
         Given the list of str, convert them to list of int
         """
         return [int(x) for x in lines]
 
-    # pylint: disable=C0116
     def move_nums(self, for_part_2: bool = False) -> List[int]:
         """
         Takes a boolean parameter to indicate if we are solving for part 2
@@ -78,7 +75,6 @@ class Solution:
             return [self.numlist[num] * key for num in result]
         return [self.numlist[num] for num in result]
 
-    # pylint: disable=C0116
     def solution1(self) -> None:
         """
         Run this to calculate part 1's answer
@@ -91,7 +87,6 @@ class Solution:
             pos = (pos + index) % self.listsize
             self.part1 += final_list[pos]
 
-    # pylint: disable=C0116
     def solution2(self) -> None:
         """
         Run this to calculate part 2's answer

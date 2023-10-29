@@ -5,7 +5,6 @@ import os
 from cave import Cave
 
 
-# pylint: disable=C0116
 def read_file(file_name: str) -> str:
     with open(
         f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",

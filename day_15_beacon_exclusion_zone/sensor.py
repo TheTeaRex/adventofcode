@@ -4,7 +4,6 @@
 import helper
 
 
-# pylint: disable=R0902
 class Sensor:
     def __init__(self, x: int, y: int, detection_distance: int) -> None:
         self.coordinate = (x, y)
@@ -34,7 +33,6 @@ class Sensor:
         result += f"Distance to closest beacon: {self.detection_distance}"
         return result
 
-    # pylint: disable=C0116
     def updates_plus_one_edges(self) -> None:
         """
         a function to update the edges with detection_distance + 1

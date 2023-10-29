@@ -23,9 +23,7 @@ points = {"X": 1, "Y": 2, "Z": 3}
 
 rounds = text.split("\n")
 # rounds = ['A Y', 'B X', 'C Z']
-# pylint: disable=C0103
 result = 0
-# pylint: disable=W0622
 for round in rounds:
     result += rules[round[0]][round[2]] + points[round[2]]
 

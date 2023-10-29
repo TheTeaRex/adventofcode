@@ -9,7 +9,6 @@ with open(
 
 # lower case minus 96
 # upper case minus 38
-# pylint: disable=C0301
 # text = "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw"
 lines = text.split("\n")
 

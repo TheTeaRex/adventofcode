@@ -6,9 +6,7 @@ from Item import Item
 from Monkey import Monkey
 
 
-# pylint: disable=R0903
 class World:
-    # pylint: disable=W0622
     def __init__(self, blob: str) -> None:
         self.item_id = 0
         self.modulo = 1
@@ -16,7 +14,6 @@ class World:
         self.items = []
         self.parse_text(blob)
 
-    # pylint: disable=C0116
     def parse_text(self, blob: str) -> None:
         line = 0
         while line < len(blob):

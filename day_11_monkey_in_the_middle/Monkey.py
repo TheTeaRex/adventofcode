@@ -7,9 +7,7 @@ from CodeExceptions import MonkeyOperationError
 from Item import Item
 
 
-# pylint: disable=R0902
 class Monkey:
-    # pylint: disable=R0913,W0622
     def __init__(
         self,
         id: int,
@@ -41,20 +39,16 @@ class Monkey:
         }
         return str(result)
 
-    # pylint: disable=C0116
     def has_items(self) -> bool:
         return len(self.items) != 0
 
-    # pylint: disable=C0116
     def inspects_item(self) -> Item:
         self.num_of_inspections += 1
         return self.items.popleft()
 
-    # pylint: disable=C0116
     def catches_item(self, item: Item) -> None:
         self.items.append(item)
 
-    # pylint: disable=C0116
     def performs_operation(
         self, item: Item, modulo: int, relief: int
     ) -> Tuple[int, Item]:

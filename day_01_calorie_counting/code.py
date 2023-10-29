@@ -15,7 +15,6 @@ for calory in calories:
         count += int(calory)
     else:
         elvies.append(count)
-        # pylint: disable=C0103
         count = 0
 
 print(max(elvies))

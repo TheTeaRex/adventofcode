@@ -12,14 +12,12 @@ class Grid:
         self.end = None
         self.find_end_to_end_and_convert_map()
 
-    # pylint: disable=C0116
     def create_grid(self, lines: List[str]) -> List[List[str]]:
         grid = []
         for line in lines:
             grid.append([line[a] for a in range(len(line))])
         return grid
 
-    # pylint: disable=C0116
     def find_end_to_end_and_convert_map(self) -> None:
         """
         input: None
@@ -36,7 +34,6 @@ class Grid:
         'y' -> 25
         'z' -> 26
         """
-        # pylint: disable=C0200
         for i in range(len(self.map)):
             for j in range(len(self.map[0])):
                 if self.map[i][j] == "S":
@@ -48,7 +45,6 @@ class Grid:
                 else:
                     self.map[i][j] = ord(self.map[i][j]) % 96  # ord('a') - 1
 
-    # pylint: disable=C0116
     def find_shortest_path_from_the_end(
         self, end: Tuple[int], start: Tuple[int] = (None, None)
     ) -> int:

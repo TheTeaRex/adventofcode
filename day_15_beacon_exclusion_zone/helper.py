@@ -4,7 +4,6 @@
 from typing import List, Tuple
 
 
-# pylint: disable=C0116
 def gets_slope(a: Tuple[int], b: Tuple[int]) -> int:
     """
     returns int rather than float
@@ -12,7 +11,6 @@ def gets_slope(a: Tuple[int], b: Tuple[int]) -> int:
     return (b[1] - a[1]) // (b[0] - a[0])
 
 
-# pylint: disable=C0116
 def gets_line_intersection(
     line1: List[Tuple[int]], line2: List[Tuple[int]]
 ) -> Tuple[int]:
@@ -27,7 +25,6 @@ def gets_line_intersection(
 
     div = det(xdiff, ydiff)
     if div == 0:
-        # pylint: disable=W0719
         raise Exception("lines do not intersect")
 
     d = (det(*line1), det(*line2))
@@ -36,11 +33,9 @@ def gets_line_intersection(
     return (x, y)
 
 
-# pylint: disable=C0116
 def calculates_the_distance(a: Tuple[int], b: Tuple[int]) -> int:
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
-# pylint: disable=C0116
 def is_within_distance(a: Tuple[int], b: Tuple[int], distance: int) -> bool:
     return calculates_the_distance(a, b) <= distance

@@ -22,7 +22,6 @@ class Solution:
         self.result_1 = self.solution_part_1()
         self.result_2 = self.solution_part_2()
 
-    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
         with open(
             f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
@@ -32,7 +31,6 @@ class Solution:
             text = f.read()
         return text
 
-    # pylint: disable=C0116
     def gets_droplets(self, lines: List[Tuple[int]]) -> Set[Tuple[int]]:
         """
         gets all the dropelets from file
@@ -41,7 +39,6 @@ class Solution:
         result = set()
         for line in lines:
             temp = tuple(int(x) for x in line.split(","))
-            # pylint: disable=W3301
             self.maxb = max(self.maxb, max(temp))
             self.minb = min(self.minb, min(temp))
             result.add(temp)
@@ -50,7 +47,6 @@ class Solution:
         self.maxb += 1
         return result
 
-    # pylint: disable=C0116
     def solution_part_1(self) -> int:
         """
         get the highest possible surface (6 * the number of droplets)
@@ -65,7 +61,6 @@ class Solution:
                     surface_area -= 1
         return surface_area
 
-    # pylint: disable=C0116
     def solution_part_2(self) -> int:
         """
         BFS to flood-filled the a finited box

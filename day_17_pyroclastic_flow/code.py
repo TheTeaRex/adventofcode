@@ -20,13 +20,11 @@ class Solution():
         self.result = 0
         self.solution(num)
 
-    # pylint: disable=C0116
     def read_file(self, file_name: str) -> str:
         with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
             text = f.read()
         return text
 
-    # pylint: disable=C0116
     def prints_rock(self, rock: List[int]) -> None:
         """
         prints out the rock formation
@@ -34,7 +32,6 @@ class Solution():
         for i in rock[::-1]:
             print(format(i, "07b"))
 
-    # pylint: disable=C0116
     def prints_chamber(self, chamber: List[int]) -> None:
         """
         prints out the chamber
@@ -47,7 +44,6 @@ class Solution():
             print(line)
         print("+-------+")
 
-    # pylint: disable=C0116,R0912
     def can_rock_move_sideway_then_down(
         self, rock: List[int], jet_dir: str, chamber: List[int], level: int
     ) -> List:
@@ -99,7 +95,6 @@ class Solution():
         if settled:
             for i in range(level, level + len(rock)):
                 if rock[i - level] & chamber[i] == 1:
-                    # pylint: disable=W0719
                     raise Exception
                 chamber[i] = rock[i - level] | chamber[i]
             while chamber[-1] == 0:
@@ -107,7 +102,6 @@ class Solution():
 
         return [settled, rock, chamber]
 
-    # pylint: disable=C0116,R0914
     def solution(self, num: int) -> None:
         """
         simulate the rock drops until a cycle is found, then do the math
