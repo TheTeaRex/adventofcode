@@ -6,15 +6,15 @@ import pytest
 
 class TestAOC2022:
     @pytest.fixture()
-    def sample_filename(self):
-        return "sample_input"
+    def example_filename(self):
+        return "example_input"
 
     @pytest.fixture()
     def filename(self):
         return "input"
 
     @pytest.fixture()
-    def sample_answer(self):
+    def example_answer(self):
         return {"day01": [24000, 45000], "day02": [15, 12], "day03": [157, 70]}
 
     @pytest.fixture()
@@ -25,10 +25,10 @@ class TestAOC2022:
             "day03": [8139, 2668],
         }
 
-    def test_day01_sample(self, sample_filename, sample_answer):
-        solution = day01.Solution(sample_filename)
-        assert solution.part1 == sample_answer["day01"][0]
-        assert solution.part2 == sample_answer["day01"][1]
+    def test_day01_example(self, example_filename, example_answer):
+        solution = day01.Solution(example_filename)
+        assert solution.part1 == example_answer["day01"][0]
+        assert solution.part2 == example_answer["day01"][1]
 
     def test_day01(self, filename, answer):
         solution = day01.Solution(filename)
