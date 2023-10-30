@@ -27,13 +27,21 @@ class Solution:
         self.cur_max = 0
         self.part1 = 0
         self.part2 = 1
+        self.solution1()
+        print(f"Part 1: {self.part1}")
+        self.solution2()
+        print(f"Part 2: {self.part2}")
 
-    def read_file(self, file_name: str) -> str:
+    def read_file(self, filename: str) -> str:
         """
         Typical file read
         Output: the str of the file
         """
-        with open(f'{os.path.dirname(os.path.realpath(__file__))}/{file_name}', 'r', encoding="utf-8") as f:
+        with open(
+            f"{os.path.dirname(os.path.realpath(__file__))}/{filename}",
+            "r",
+            encoding="utf-8",
+        ) as f:
             text = f.read()
         return text
 
@@ -162,8 +170,4 @@ class Solution:
 
 
 if __name__ == "__main__":
-    solution = Solution("input")
-    solution.solution1()
-    print(f"Part 1: {solution.part1}")
-    solution.solution2()
-    print(f"Part 2: {solution.part2}")
+    solution = Solution("example_input")

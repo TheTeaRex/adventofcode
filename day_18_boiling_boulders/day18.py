@@ -19,12 +19,14 @@ class Solution:
             (0, 0, -1),
         ]
         self.droplets = self.gets_droplets(lines)
-        self.result_1 = self.solution_part_1()
-        self.result_2 = self.solution_part_2()
+        self.part1 = self.solution_part_1()
+        print(f"Part 1: {self.part1}")
+        self.part2 = self.solution_part_2()
+        print(f"Part 2: {self.part2}")
 
-    def read_file(self, file_name: str) -> str:
+    def read_file(self, filename: str) -> str:
         with open(
-            f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+            f"{os.path.dirname(os.path.realpath(__file__))}/{filename}",
             "r",
             encoding="utf-8",
         ) as f:
@@ -95,5 +97,3 @@ class Solution:
 
 if __name__ == "__main__":
     solution = Solution("input")
-    print(f"Part 1: {solution.result_1}")
-    print(f"Part 2: {solution.result_2}")
