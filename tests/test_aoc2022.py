@@ -10,6 +10,16 @@ from day_07_no_space_left_on_device import day07
 from day_08_treetop_tree_house import day08
 from day_09_rope_bridge import day09
 from day_10_cathod_ray_tube import day10
+from day_11_monkey_in_the_middle import day11
+from day_12_hill_climbing_algorithm import day12
+from day_13_distress_signal import day13
+from day_14_regolith_reservoir import day14
+from day_15_beacon_exclusion_zone import day15
+from day_16_proboscidea_volcanium import day16
+from day_17_pyroclastic_flow import day17
+from day_18_boiling_boulders import day18
+from day_19_not_enough_minerals import day19
+from day_20_grove_positioning_system import day20
 import pytest
 
 
@@ -26,7 +36,18 @@ import pytest
         (day08, "day08"),
         (day09, "day09"),
         (day10, "day10"),
+        (day11, "day11"),
+        (day12, "day12"),
+        (day13, "day13"),
+        (day14, "day14"),
+        (day15, "day15"),
+        (day16, "day16"),
+        (day17, "day17"),
+        (day18, "day18"),
+        (day19, "day19"),
+        (day20, "day20"),
     ],
+    scope='session'
 )
 class TestAOC2022:
     @pytest.fixture()
@@ -51,6 +72,16 @@ class TestAOC2022:
             "day08": [21, 8],
             "day09": [88, 36],
             "day10": [13140, day10_part2],
+            "day11": [10605, 2713310158],
+            "day12": [31, 29],
+            "day13": [13, 140],
+            "day14": [24, 93],
+            "day15": [26, 56000011],
+            "day16": [1651, 1707],
+            "day17": [3068, 1514285714288],
+            "day18": [64, 58],
+            "day19": [33, 3472],
+            "day20": [3, 1623178306],
         }
 
     @pytest.fixture()
@@ -67,6 +98,16 @@ class TestAOC2022:
             "day08": [1713, 268464],
             "day09": [6503, 2724],
             "day10": [16880, day10_part2],
+            "day11": [58794, 20151213744],
+            "day12": [456, 454],
+            "day13": [5557, 22425],
+            "day14": [1133, 27566],
+            "day15": [5878678, 11796491041245],
+            "day16": [2056, 2513],
+            "day17": [3159, 1566272189352],
+            "day18": [3396, 2044],
+            "day19": [2301, 10336],
+            "day20": [2622, 1538773034088],
         }
 
     def test_example_input(self, instance, name, example_filename, example_answer):

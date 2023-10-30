@@ -7,8 +7,7 @@ from jet import Jet
 
 
 class Solution:
-    def __init__(self, filename: str, num: int) -> None:
-        self.jet = Jet(self.read_file(filename))
+    def __init__(self, filename: str) -> None:
         self.rocks = [
             [30],  # 0b0011110
             [8, 28, 8],  # 0b0001000, 0b0011100, 0b0001000
@@ -16,13 +15,22 @@ class Solution:
             [16, 16, 16, 16],  # 0b0010000 x4
             [24, 24],  # 0b0011000 x2
         ]
-        self.seen = {}
-        self.result = 0
-        self.solution(num)
 
-    def read_file(self, file_name: str) -> str:
+        # part 1
+        self.jet = Jet(self.read_file(filename))
+        self.seen = {}
+        self.part1 = self.solution(2022)
+        print(f"Part 1: {self.part1}")
+
+        # part 2
+        self.jet = Jet(self.read_file(filename))
+        self.seen = {}
+        self.part2 = self.solution(1000000000000)
+        print(f"Part 2: {self.part2}")
+
+    def read_file(self, filename: str) -> str:
         with open(
-            f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+            f"{os.path.dirname(os.path.realpath(__file__))}/{filename}",
             "r",
             encoding="utf-8",
         ) as f:
@@ -106,10 +114,11 @@ class Solution:
 
         return [settled, rock, chamber]
 
-    def solution(self, num: int) -> None:
+    def solution(self, num: int) -> int:
         """
         simulate the rock drops until a cycle is found, then do the math
         """
+        result = 0
         chamber = [511]  # 0b1111111
         heights = []
 
@@ -142,7 +151,7 @@ class Solution:
             self.seen[index] = i
         else:
             # if there is not cycle, it will sim the whole thing and spit out the answer
-            self.result = len(chamber) - 1
+            result = len(chamber) - 1
 
         base_index = self.seen[index]
         base_height = heights[base_index - 1] - 1
@@ -150,13 +159,10 @@ class Solution:
         num_of_cycle = (num - 1 - base_index) // (i - base_index)
         remainder = (num - 1 - base_index) % (i - base_index)
         remainder_height = heights[remainder + base_index] - heights[base_index - 1]
-        self.result = base_height + (cycle_height * num_of_cycle) + remainder_height
+        result = base_height + (cycle_height * num_of_cycle) + remainder_height
+
+        return result
 
 
 if __name__ == "__main__":
-    # Part 1 solution
-    solution1 = Solution("input", 2022)
-    print(f"Part 1: {solution1.result}")
-    # Part 2 solution
-    solution2 = Solution("input", 1000000000000)
-    print(f"Part 2: {solution2.result}")
+    Solution("input")

@@ -18,6 +18,10 @@ class Solution:
         self.listsize = len(self.numlist)
         self.part1 = 0
         self.part2 = 0
+        self.solution1()
+        print(f"Part 1: {self.part1}")
+        self.solution2()
+        print(f"Part 2: {self.part2}")
 
     def read_file(self, file_name: str) -> str:
         """
@@ -102,7 +106,3 @@ class Solution:
 
 if __name__ == "__main__":
     solution = Solution("input")
-    solution.solution1()
-    print(f"Part 1: {solution.part1}")
-    solution.solution2()
-    print(f"Part 2: {solution.part2}")

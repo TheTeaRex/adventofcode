@@ -2,8 +2,8 @@
 
 
 import re
-from Item import Item
-from Monkey import Monkey
+from item import Item
+from monkey import Monkey
 
 
 class World:
