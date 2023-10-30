@@ -6,6 +6,10 @@ from day_03_rucksack_reorganization import day03
 from day_04_camp_cleanup import day04
 from day_05_supply_stacks import day05
 from day_06_tuning_trouble import day06
+from day_07_no_space_left_on_device import day07
+from day_08_treetop_tree_house import day08
+from day_09_rope_bridge import day09
+from day_10_cathod_ray_tube import day10
 import pytest
 
 
@@ -18,6 +22,10 @@ import pytest
         (day04, "day04"),
         (day05, "day05"),
         (day06, "day06"),
+        (day07, "day07"),
+        (day08, "day08"),
+        (day09, "day09"),
+        (day10, "day10"),
     ],
 )
 class TestAOC2022:
@@ -31,6 +39,7 @@ class TestAOC2022:
 
     @pytest.fixture()
     def example_answer(self):
+        day10_part2 = '\n##..##..##..##..##..##..##..##..##..##..\n###...###...###...###...###...###...###.\n####....####....####....####....####....\n#####.....#####.....#####.....#####.....\n######......######......######......####\n#######.......#######.......#######.....'  # noqa: E501
         return {
             "day01": [24000, 45000],
             "day02": [15, 12],
@@ -38,10 +47,15 @@ class TestAOC2022:
             "day04": [2, 4],
             "day05": ["CMZ", "MCD"],
             "day06": [11, 26],
+            "day07": [95437, 24933642],
+            "day08": [21, 8],
+            "day09": [88, 36],
+            "day10": [13140, day10_part2],
         }
 
     @pytest.fixture()
     def answer(self):
+        day10_part2 = '\n###..#..#..##..####..##....##.###..###..\n#..#.#.#..#..#....#.#..#....#.#..#.#..#.\n#..#.##...#..#...#..#..#....#.###..#..#.\n###..#.#..####..#...####....#.#..#.###..\n#.#..#.#..#..#.#....#..#.#..#.#..#.#.#..\n#..#.#..#.#..#.####.#..#..##..###..#..#.'  # noqa: E501
         return {
             "day01": [68467, 203420],
             "day02": [11666, 12767],
@@ -49,6 +63,10 @@ class TestAOC2022:
             "day04": [556, 876],
             "day05": ["ZSQVCCJLL", "QZFJRWHGS"],
             "day06": [1080, 3645],
+            "day07": [1490523, 12390492],
+            "day08": [1713, 268464],
+            "day09": [6503, 2724],
+            "day10": [16880, day10_part2],
         }
 
     def test_example_input(self, instance, name, example_filename, example_answer):
