@@ -23,13 +23,13 @@ class Solution:
         self.solution2()
         print(f"Part 2: {self.part2}")
 
-    def read_file(self, file_name: str) -> str:
+    def read_file(self, filename: str) -> str:
         """
         Typical file read
         Output: the str of the file
         """
         with open(
-            f"{os.path.dirname(os.path.realpath(__file__))}/{file_name}",
+            f"{os.path.dirname(os.path.realpath(__file__))}/{filename}",
             "r",
             encoding="utf-8",
         ) as f:
