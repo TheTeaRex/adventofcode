@@ -3,7 +3,7 @@
 
 import copy
 import os
-from world import World
+from day_11_monkey_in_the_middle.world import World
 
 
 class Solution:

@@ -2,7 +2,7 @@
 
 
 import os
-from cave14 import Cave
+from day_14_regolith_reservoir.cave import Cave
 
 
 class Solution:

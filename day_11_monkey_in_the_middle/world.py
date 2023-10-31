@@ -2,8 +2,8 @@
 
 
 import re
-from item import Item
-from monkey import Monkey
+from day_11_monkey_in_the_middle.item import Item
+from day_11_monkey_in_the_middle.monkey import Monkey
 
 
 class World:

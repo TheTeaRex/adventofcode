@@ -3,8 +3,8 @@
 
 import os
 from typing import List
-import helper
-from cave15 import Cave
+import day_15_beacon_exclusion_zone.helper as helper
+from day_15_beacon_exclusion_zone.cave import Cave
 
 
 class Solution:

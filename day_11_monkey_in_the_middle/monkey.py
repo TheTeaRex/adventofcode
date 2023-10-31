@@ -3,8 +3,8 @@
 
 from collections import deque
 from typing import List, Tuple
-from codeexception import MonkeyOperationError
-from item import Item
+from day_11_monkey_in_the_middle.codeexception import MonkeyOperationError
+from day_11_monkey_in_the_middle.item import Item
 
 
 class Monkey:

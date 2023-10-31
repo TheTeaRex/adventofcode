@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 
-import helper
+import day_15_beacon_exclusion_zone.helper as helper
 
 
 class Sensor:
