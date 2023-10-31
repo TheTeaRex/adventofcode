@@ -5,7 +5,7 @@ import os
 import re
 from collections import deque
 from typing import Dict, List
-from room import Room
+from day_16_proboscidea_volcanium.room import Room
 
 
 class Solution:

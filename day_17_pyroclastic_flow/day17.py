@@ -3,7 +3,7 @@
 
 import os
 from typing import List
-from jet import Jet
+from day_17_pyroclastic_flow.jet import Jet
 
 
 class Solution:

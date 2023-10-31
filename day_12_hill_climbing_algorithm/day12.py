@@ -2,7 +2,7 @@
 
 
 import os
-from grid import Grid
+from day_12_hill_climbing_algorithm.grid import Grid
 
 
 class Solution:

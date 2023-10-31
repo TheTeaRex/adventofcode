@@ -3,9 +3,9 @@
 
 import re
 from typing import Dict, List, Tuple
-import helper
-from beacon import Beacon
-from sensor import Sensor
+import day_15_beacon_exclusion_zone.helper as helper
+from day_15_beacon_exclusion_zone.beacon import Beacon
+from day_15_beacon_exclusion_zone.sensor import Sensor
 
 
 class Cave:
