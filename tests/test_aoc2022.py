@@ -20,6 +20,7 @@ from day_17_pyroclastic_flow import day17
 from day_18_boiling_boulders import day18
 from day_19_not_enough_minerals import day19
 from day_20_grove_positioning_system import day20
+from day_21_monkey_math import day21
 import pytest
 
 
@@ -46,6 +47,7 @@ import pytest
         (day18, "day18"),
         (day19, "day19"),
         (day20, "day20"),
+        (day21, "day21"),
     ],
     scope='session'
 )
@@ -82,6 +84,7 @@ class TestAOC2022:
             "day18": [64, 58],
             "day19": [33, 3472],
             "day20": [3, 1623178306],
+            "day21": [152, 301],
         }
 
     @pytest.fixture()
@@ -108,6 +111,7 @@ class TestAOC2022:
             "day18": [3396, 2044],
             "day19": [2301, 10336],
             "day20": [2622, 1538773034088],
+            "day21": [291425799367130, 3219579395609],
         }
 
     def test_example_input(self, instance, name, example_filename, example_answer):
