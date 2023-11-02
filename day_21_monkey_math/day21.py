@@ -2,7 +2,7 @@
 
 
 import os
-from typing import List
+from typing import Dict, List, Tuple
 
 
 class Solution:
@@ -15,6 +15,7 @@ class Solution:
         self.monkeys = self.parse_data(lines)
         self.part1 = self.solution1_dfs("root", self.monkeys["root"])[0]
         print(f"Part 1: {self.part1}")
+        # solution 2 requires self.solution1() to be run first
         self.part2 = self.solution2()
         print(f"Part 2: {self.part2}")
 
@@ -31,7 +32,7 @@ class Solution:
             text = f.read()
         return text
 
-    def parse_data(self, lines: List[str]):
+    def parse_data(self, lines: List[str]) -> Dict[str, Dict[str, object]]:
         monkeys = {}
         for line in lines:
             name, item = line.split(": ")
@@ -59,13 +60,13 @@ class Solution:
 
         return monkeys
 
-    def solution1_dfs(self, name, monkey):
+    def solution1_dfs(self, name, monkey) -> Tuple[int, bool]:
         if "result" in monkey:
             if name == "humn":
                 self.monkeys[name]["humn"] = True
-                return [monkey["result"], True]
+                return (monkey["result"], True)
             else:
-                return [monkey["result"], monkey["humn"]]
+                return (monkey["result"], monkey["humn"])
 
         two_monkeys = []
         has_humn = False
@@ -89,9 +90,9 @@ class Solution:
         self.monkeys[name]["result"] = result
         self.monkeys[name]["humn"] = has_humn
 
-        return [result, has_humn]
+        return (result, has_humn)
 
-    def solution2_dfs(self, name, monkey, num):
+    def solution2_dfs(self, name, monkey, num) -> int:
         if name == "humn":
             return num
 
@@ -118,7 +119,7 @@ class Solution:
                 new_num = (1 // num) * self.monkeys[left]["result"]
             return self.solution2_dfs(right, self.monkeys[right], new_num)
 
-    def solution2(self):
+    def solution2(self) -> int:
         # this assume only one of the two children of root touches the name 'humn'
         left = self.monkeys["root"]["monkey1"]
         right = self.monkeys["root"]["monkey2"]
