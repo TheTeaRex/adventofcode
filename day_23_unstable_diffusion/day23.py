@@ -14,7 +14,7 @@ class Solution:
         self.part1 = 0
         self.part2 = 0
         lines = self.read_file(filename).split("\n")
-        self.elves_pos = []
+        self.elves_pos = set()
         self.elves_dir_order = ["n", "s", "w", "e"]
         self.parse_data(lines)
         self.size = len(self.elves_pos)
@@ -36,12 +36,19 @@ class Solution:
         return text
 
     def parse_data(self, lines: List[str]) -> None:
+        """
+        store result in self.elves_pos
+        """
         for r, line in enumerate(lines):
             for c, char in enumerate(line):
                 if char == "#":
-                    self.elves_pos.append((r, c))
+                    self.elves_pos.add((r, c))
 
     def get_min_max_r_c(self) -> Dict[str, int]:
+        """
+        calculate the min and max for row and column
+        return in dict
+        """
         result = {
             "min_r": float("inf"),
             "min_c": float("inf"),
@@ -56,6 +63,10 @@ class Solution:
         return result
 
     def form_map(self) -> List[List[str]]:
+        """
+        calculate offset to make a visualization of the map in a list
+        return the list
+        """
         min_max = self.get_min_max_r_c()
         offset_r = 0
         offset_c = 0
@@ -81,12 +92,17 @@ class Solution:
         return map
 
     def print_map(self) -> None:
+        """
+        print the map and allow user to visualize it
+        """
         for item in self.form_map():
             print("".join(item))
 
-    def each_round(self) -> None:
+    def each_round(self) -> bool:
         """
         go through the decision tree for each elf and move accordingly
+        return True if all the elves are settled, meaning they don't move for the round
+        return False if any of the elves moved for the round
         """
         checks = {
             "n": ((-1, -1), (-1, 0), (-1, 1)),
@@ -104,8 +120,7 @@ class Solution:
                 (0, -1),
             ),
         }
-        proposed_pos = [None] * self.size
-        proposed_dir = [None] * self.size
+        proposals = {}
         # first half of the round
         # for each elf
         for i, elf_pos in enumerate(self.elves_pos):
@@ -124,30 +139,32 @@ class Solution:
                     if (elf_pos[0] + dr, elf_pos[1] + dc) in self.elves_pos:
                         break
                 else:  # no elves are in the way for that one direction
-                    proposed_dir[i] = dir
-                    proposed_pos[i] = (
+                    new_pos = (
                         elf_pos[0] + checks[dir][1][0],
                         elf_pos[1] + checks[dir][1][1],
                     )
+                    # if we haven't see this new position, store the elf that's moving and it's dir
+                    # if we have seen it, mark new_pos as dup
+                    if new_pos not in proposals:
+                        proposals[new_pos] = {"elf": elf_pos, "dup": False}
+                    else:
+                        proposals[new_pos]["dup"] = True
                     break
 
+        if len(proposals) == 0:
+            return True
+
         # second half of the round
-        move = [True] * self.size
-        for i, item in enumerate(proposed_pos):
-            if item is None:
-                move[i] = False
-                continue
-            if move[i] is True:
-                for j in range(i + 1, self.size):
-                    if item == proposed_pos[j]:
-                        move[i] = False
-                        move[j] = False
-        # actual move
-        for i, item in enumerate(move):
-            if item is True:
-                self.elves_pos[i] = proposed_pos[i]
+        # move the non-dup elfs
+        for new_pos in proposals:
+            if proposals[new_pos]["dup"] is False:
+                self.elves_pos.remove(proposals[new_pos]["elf"])
+                self.elves_pos.add(new_pos)
+
         # move first direction to the last choice
         self.elves_dir_order.append(self.elves_dir_order.pop(0))
+
+        return False
 
     def solution1_and_2(self):
         i = 0
@@ -160,6 +177,14 @@ class Solution:
         self.part1 = (min_max["max_r"] - min_max["min_r"] + 1) * (
             min_max["max_c"] - min_max["min_c"] + 1
         ) - self.size
+
+        # part 2
+        while True:
+            if self.each_round():
+                break
+            i += 1
+
+        self.part2 = i + 1
 
 
 if __name__ == "__main__":
