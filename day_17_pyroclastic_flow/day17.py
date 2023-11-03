@@ -56,7 +56,7 @@ class Solution:
             print(line)
         print("+-------+")
 
-    def can_rock_move_sideway_then_down(  # noqa: C901
+    def can_rock_move_sideway_then_down(
         self, rock: List[int], jet_dir: str, chamber: List[int], level: int
     ) -> List:
         """

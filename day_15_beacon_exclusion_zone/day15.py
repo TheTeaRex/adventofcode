@@ -44,7 +44,7 @@ class Solution:
         result.append(cur)
         return result
 
-    def solution_part_1(self, cave: Cave, row: int) -> int:  # noqa: C901
+    def solution_part_1(self, cave: Cave, row: int) -> int:
         ranges = []
         sensors = []
         result = 0
@@ -87,7 +87,7 @@ class Solution:
 
         return result
 
-    def solution_part_2(self, cave: Cave, grid_size: int) -> int:  # noqa: C901
+    def solution_part_2(self, cave: Cave, grid_size: int) -> int:
         answer = None
         intersections = []
         sensors_that_could_intersect = cave.gets_sensors_that_are_close_enough()

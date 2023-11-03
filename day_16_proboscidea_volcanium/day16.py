@@ -68,7 +68,7 @@ class Solution:
             room.to_all_rooms = dests
         return rooms
 
-    def solution(  # noqa: C901
+    def solution(
         self, start_room: Room, time_left: int, rooms: Dict[str, Room], part: int
     ) -> int:
         """
