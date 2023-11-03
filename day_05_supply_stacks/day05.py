@@ -10,7 +10,7 @@ class Solution:
         self.part2 = 0
         self.solution(filename)
 
-    def solution(self, filename: str):  # noqa: C901
+    def solution(self, filename: str):
         with open(
             f"{os.path.dirname(os.path.realpath(__file__))}/{filename}",
             "r",

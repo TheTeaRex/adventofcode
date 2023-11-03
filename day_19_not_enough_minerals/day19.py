@@ -78,7 +78,7 @@ class Solution:
             result += i + 1
         return result
 
-    def dfs(  # noqa: C901
+    def dfs(
         self,
         bp: List[List[Tuple[int, int]]],
         max_mats: List[int],

@@ -25,7 +25,7 @@ class Solution:
         rows = text.split("\n")
         return [[int(c) for c in row] for row in rows]
 
-    def solution(self, grid: List[List[int]]) -> int:  # noqa: C901
+    def solution(self, grid: List[List[int]]) -> int:
         max_scenic_score = 0
         visible_trees = (len(grid) * len(grid[0])) - (
             (len(grid) - 2) * (len(grid[0]) - 2)

@@ -88,7 +88,7 @@ class Solution:
 
         return cnta * cntb
 
-    def is_pair_in_right_order(self, left, right) -> bool:  # noqa: C901
+    def is_pair_in_right_order(self, left, right) -> bool:
         """
         Given a pair of lists
         Return if they are in the right order
