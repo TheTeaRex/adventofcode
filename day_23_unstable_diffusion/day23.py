@@ -80,12 +80,10 @@ class Solution:
             offset_c = -min_max["min_c"]
 
         map_pos = [(item[0] + offset_r, item[1] + offset_c) for item in self.elves_pos]
-        map = []
-        for _ in range(min_max["max_r"] + offset_r + 1):
-            temp = []
-            for _ in range(min_max["max_c"] + offset_c + 1):
-                temp.append(".")
-            map.append(temp)
+        map = [
+            ["." for _ in range(min_max["max_c"] + offset_c + 1)]
+            for _ in range(min_max["max_r"] + offset_r + 1)
+        ]
         for r, c in map_pos:
             map[r][c] = "#"
 
