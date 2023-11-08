@@ -24,6 +24,7 @@ from day_21_monkey_math import day21
 
 # missing day22
 from day_23_unstable_diffusion import day23
+from day_24_blizzard_basin import day24
 import pytest
 
 
@@ -52,6 +53,7 @@ import pytest
         (day20, "day20"),
         (day21, "day21"),
         (day23, "day23"),
+        (day24, "day24"),
     ],
     scope="session",
 )
@@ -90,6 +92,7 @@ class TestAOC2022:
             "day20": [3, 1623178306],
             "day21": [152, 301],
             "day23": [110, 20],
+            "day24": [18, 54],
         }
 
     @pytest.fixture()
@@ -118,6 +121,7 @@ class TestAOC2022:
             "day20": [2622, 1538773034088],
             "day21": [291425799367130, 3219579395609],
             "day23": [4195, 1069],
+            "day24": [232, 715],
         }
 
     def test_example_input(self, instance, name, example_filename, example_answer):
