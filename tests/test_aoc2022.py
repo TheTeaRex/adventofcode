@@ -21,8 +21,7 @@ from day_18_boiling_boulders import day18
 from day_19_not_enough_minerals import day19
 from day_20_grove_positioning_system import day20
 from day_21_monkey_math import day21
-
-# missing day22
+from day_22_monkey_map import day22
 from day_23_unstable_diffusion import day23
 from day_24_blizzard_basin import day24
 import pytest
@@ -52,6 +51,7 @@ import pytest
         (day19, "day19"),
         (day20, "day20"),
         (day21, "day21"),
+        (day22, "day22"),
         (day23, "day23"),
         (day24, "day24"),
     ],
@@ -91,6 +91,7 @@ class TestAOC2022:
             "day19": [33, 3472],
             "day20": [3, 1623178306],
             "day21": [152, 301],
+            "day22": [6032, 5031],
             "day23": [110, 20],
             "day24": [18, 54],
         }
@@ -120,6 +121,7 @@ class TestAOC2022:
             "day19": [2301, 10336],
             "day20": [2622, 1538773034088],
             "day21": [291425799367130, 3219579395609],
+            "day22": [67390, 95291],
             "day23": [4195, 1069],
             "day24": [232, 715],
         }
