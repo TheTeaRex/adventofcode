@@ -24,6 +24,7 @@ from day_21_monkey_math import day21
 from day_22_monkey_map import day22
 from day_23_unstable_diffusion import day23
 from day_24_blizzard_basin import day24
+from day_25_full_of_hot_air import day25
 import pytest
 
 
@@ -54,6 +55,7 @@ import pytest
         (day22, "day22"),
         (day23, "day23"),
         (day24, "day24"),
+        (day25, "day25"),
     ],
     scope="session",
 )
@@ -94,6 +96,7 @@ class TestAOC2022:
             "day22": [6032, 5031],
             "day23": [110, 20],
             "day24": [18, 54],
+            "day25": ["2=-1=0", None],
         }
 
     @pytest.fixture()
@@ -124,6 +127,7 @@ class TestAOC2022:
             "day22": [67390, 95291],
             "day23": [4195, 1069],
             "day24": [232, 715],
+            "day25": ["2---1010-0=1220-=010", None],
         }
 
     def test_example_input(self, instance, name, example_filename, example_answer):
